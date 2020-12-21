@@ -9,7 +9,7 @@ p {
   color: #777; }
 
 a, a:hover, a:focus {
-  color: #30a5ff; }
+  color: #FFF; }
 
 h1, h2, h3, h4, h5, h6 {
   color: #444444; }
@@ -1040,4 +1040,158 @@ p.back-link {
 table#table-config
 {
   margin-left: 30px;
+}
+
+.table-striped
+{
+  margin-left: 30px;
+}
+
+.groupcourse
+{
+  margin: 0;
+  font-size: 0;
+}
+
+.groupcourse
+{
+  width: 100%;
+  margin: 0 auto;
+  display: block; 
+  font-size:0 ;
+  list-style-type: none;
+  padding: 10px 0;
+  border-bottom: 2px solid #f3f4f4;
+}
+.groupcourse > div
+{
+  display: inline-block;
+  width: 20%;
+  font-size: 15px;
+  margin: 0;
+  padding: 0;
+  vertical-align: middle;
+  text-align: center;
+}
+
+.groupclass
+{
+  margin: 0;
+  font-size: 0;
+}
+
+.groupclass
+{
+  width: 100%;
+  margin: 0 auto;
+  display: block; 
+  font-size:0 ;
+  list-style-type: none;
+  padding: 10px 0;
+  border-bottom: 2px solid #f3f4f4;
+}
+.groupclass > div
+{
+  display: inline-block;
+  width: 12.5%;
+  font-size: 15px;
+  margin: 0;
+  padding: 0;
+  vertical-align: middle;
+  text-align: center;
+}
+.groupStudent
+{
+  margin: 0;
+  font-size: 0;
+}
+
+.groupStudent
+{
+  width: 100%;
+  margin: 0 auto;
+  display: block; 
+  font-size:0 ;
+  list-style-type: none;
+  padding: 10px 0;
+  border-bottom: 2px solid #f3f4f4;
+}
+.groupStudent > div
+{
+  display: inline-block;
+  width: 11.1%;
+  font-size: 10px;
+  margin: 0;
+  padding: 0;
+  vertical-align: middle;
+  text-align: center;
+}
+.groupteacher
+{
+  margin: 0;
+  font-size: 0;
+}
+
+.groupteacher
+{
+  width: 100%;
+  margin: 0 auto;
+  display: block; 
+  font-size:0 ;
+  list-style-type: none;
+  padding: 10px 0;
+  border-bottom: 2px solid #f3f4f4;
+}
+.groupteacher > div
+{
+  display: inline-block;
+  width: 12.5%;
+  font-size: 14px;
+  margin: 0;
+  padding: 0;
+  vertical-align: middle;
+  text-align: center;
+}
+
+.grouprole
+{
+  margin: 0;
+  font-size: 0;
+}
+
+.grouprole
+{
+  width: 100%;
+  margin: 0 auto;
+  display: block; 
+  font-size:0 ;
+  list-style-type: none;
+  padding: 10px 0;
+  border-bottom: 2px solid #f3f4f4;
+}
+.grouprole > div
+{
+  display: inline-block;
+  width: 20%;
+  font-size: 14px;
+  margin: 0;
+  padding: 0;
+  vertical-align: middle;
+  text-align: center;
+}
+.courseDelete, .classDelete, .studentDelete, .teacherDelete, .userDelete, .roleDelete em.fa.fa-trash {
+    color: #444444;
+}
+
+.student-item
+{
+  font-size: 11px;
+}
+
+.groupRoleByUser
+{
+  width: 57%;
+  margin: 10px; 
+  border: 2px solid green;
+  padding: 10px;  
 }

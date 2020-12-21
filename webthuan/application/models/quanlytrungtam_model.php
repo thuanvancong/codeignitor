@@ -50,6 +50,14 @@ class quanlytrungtam_model extends CI_Model
 		return $query->result_array();
 	}
 
+	function getRoleByUserID($user_id)
+	{
+		$this->load->database();
+		$query = $this->db->query("select role_id,user_id from role_has_user where user_id = $user_id");
+		return $query->result_array();
+		
+	}
+
 	function InsertDB($dataInsert,$table)
 	{
 		$this->load->database();
@@ -75,6 +83,12 @@ class quanlytrungtam_model extends CI_Model
 	{
 		$this->load->database();
 		$query = $this->db->query("select * from menu where menu_order =0");
+		return $query->result_array();
+	}
+	function getPassUserByID($id)
+	{
+		$this->load->database();
+		$query = $this->db->query("select user_pass from users where user_id=$id");
 		return $query->result_array();
 	}
 }

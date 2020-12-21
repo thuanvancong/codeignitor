@@ -26,17 +26,23 @@
 					<li><a class="" href="http://localhost:8888/codeigniter/webthuan/index.php/quanlytrungtam/pageCourse">
 						<span class="fa fa-arrow-right">&nbsp;</span> Course
 					</a></li>
-					<li><a class="" href="#">
+					<li><a class="" href="http://localhost:8888/codeigniter/webthuan/index.php/quanlytrungtam/pageClass">
 						<span class="fa fa-arrow-right">&nbsp;</span> Class
 					</a></li>
-					<li><a class="" href="#">
+					<li><a class="" href="http://localhost:8888/codeigniter/webthuan/index.php/quanlytrungtam/pageStudent">
 						<span class="fa fa-arrow-right">&nbsp;</span> Student
 					</a></li>
-					<li><a class="" href="#">
+					<li><a class="" href="http://localhost:8888/codeigniter/webthuan/index.php/quanlytrungtam/pageTeacher">
 						<span class="fa fa-arrow-right">&nbsp;</span> Teacher
 					</a></li>
-					<li><a class="" href="#">
+					<li><a class="" href="http://localhost:8888/codeigniter/webthuan/index.php/quanlytrungtam/pageUser">
+						<span class="fa fa-arrow-right">&nbsp;</span> Users
+					</a></li>
+					<li><a class="" href="http://localhost:8888/codeigniter/webthuan/index.php/quanlytrungtam/pageRole">
 						<span class="fa fa-arrow-right">&nbsp;</span> Role
+					</a></li>
+					<li><a class="" href="http://localhost:8888/codeigniter/webthuan/index.php/quanlytrungtam/pageRoleByUser">
+						<span class="fa fa-arrow-right">&nbsp;</span> RoleByUser
 					</a></li>
 				</ul>
 			</li>

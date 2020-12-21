@@ -13,13 +13,13 @@
 		</div>
 	</div>
 	<div class="btn">
-		<button><a href="<?php echo $configAdd ?>">Thêm</a></button>
-        <button><a href="<?php echo $configUpdate ?>">Sửa</a></button>
-       <button><a href="<?php echo $configDelete ?>">Xóa</a></button>
+		<button class ="btn btn-primary btn-md"><a href="<?php echo $configAdd?>">Thêm</a></button>
+        <button class ="btn btn-primary btn-md"><a href="<?php echo $configUpdate ?>">Sửa</a></button>
+        <button class ="btn btn-primary btn-md"><a href="<?php echo $configDelete ?>">Xóa</a></button>
 	</div>
 	<div class="row">
 		<?php 
-			echo '<table style="width:70%" id="table-config">
+			echo '<table style="width:70%" id="table-config" class="table table-striped">
 			  <tr>
 			    <th>Id</th>
 			    <th>Cấu Hình</th> 

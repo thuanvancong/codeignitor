@@ -67,8 +67,6 @@
 					foreach ($DsDbMenuName as $key => $value) {
 						echo '<option value="'.$value['menu_name'].'" selected="selected">'.$value['menu_name'].'</option>';
 					}
-					var_dump(base_url());
-					var_dump(site_url());
 					?>
 					</select>
 				</div>

@@ -13,13 +13,13 @@
 		</div>
 	</div>
 	<div class="btn">
-		<button><a href="<?php echo $pageMenuCreate; ?>">Thêm</a></button>
-        <button><a href="<?php echo $pageMenuUpdate; ?>">Sửa</a></button>
-       <button><a href="<?php echo $pageMenuDelete ?>">Xóa</a></button>
+		<button class ="btn btn-primary btn-md"><a href="<?php echo $pageMenuCreate; ?>">Thêm</a></button>
+        <button class ="btn btn-primary btn-md"><a href="<?php echo $pageMenuUpdate; ?>">Sửa</a></button>
+       <button class ="btn btn-primary btn-md"><a href="<?php echo $pageMenuDelete ?>">Xóa</a></button>
 	</div>
 	<div class="row">
 		<?php 
-			echo '<table style="width:70%" id="table-menu">
+			echo '<table style="width:70%" id="table-menu" class="table table-striped">
 			  <tr>
 			    <th>ID</th>
 			    <th>Tên Menu</th> 

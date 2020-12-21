@@ -24,7 +24,7 @@
 			</div>
 			<div class="row">
 				<div class="col-md-2">
-					<label for="configField">TÊN CẤU HÌNH</label>
+					<label for="configField">TÊN CẤU HÌNH</label>`
 				</div>
 				<div class="col-md-10">
 					<input type="text" id="configField"><br>
