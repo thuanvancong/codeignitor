@@ -12,86 +12,45 @@
 			<h1 class="page-header">Học viên</h1>
 		</div>
 	</div>
-	<div class="row">
-		<div class="" id="studentItem">
-			<div class="row">
-				<div class="col-md-2">
+	<div class="panel-body">
+		<div class="col-md-6">
+			<form id="formStudentUpdate" action="ajaxUpdateStudentItem()" method="POST">
+				<div class="form-group">
 					<label for="studentID">CHỌN ID CẦN SỬA</label>
-				</div>
-				<div class="col-md-10">
-					<select id="studentID">
+					<select class="form-control" id="studentID">
 						<?php 
 							foreach ($DBStudent as $key => $value) {
-								echo 
-									'<option value="'.$value['student_id'].'" selected>'.$value['student_id'].'</option>';
+								echo '<option value="'.$value['student_id'].'" selected>'.$value['student_id'].'</option>';
 							}
 						?>
 					</select>
 				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-2">
+				<div class="form-group">
 					<label for="studentName">Tên học viên</label>
+					<input type="text" id="studentName" class="form-control" required>
 				</div>
-				<div class="col-md-10">
-					<input type="text" id="studentName"><br>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-2">
+				<div class="form-group">
 					<label for="studentOld">Tuổi</label>
+					<input type="number" id="studentOld" class="form-control" required>
 				</div>
-				<div class="col-md-10">
-					<input type="number" id="studentOld"><br>
+				<div class="form-group">
+					<label for="studentSex">Giới tính</label>
+					<input type="text" id="studentSex" class="form-control" required>
 				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-2">
-					<label for="studentSex">Giới tính</label><br>
+				<div class="form-group">
+					<label for="studentAddress">Địa chỉ</label>
+					<input type="text" id="studentAddress" class="form-control" required>
 				</div>
-				<div class="col-md-10">
-					<input type="text" id="studentSex" name="studentSex">
+				<div class="form-group">
+					<label for="studentEmail">Email</label>
+					<input type="email" id="studentEmail" class="form-control" required>
 				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-2">
-					<label for="studentAddress">Địa chỉ</label><br>
-				</div>
-				<div class="col-md-10">
-					<input type="text" id="studentAddress" name="studentAddress">
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-2">
-					<label for="studentEmail">Email</label><br>
-				</div>
-				<div class="col-md-10">
-					<input type="email" id="studentEmail" name="studentEmail">
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-2">
+				<div class="form-group">
 					<label for="studentPhone">SDT</label><br>
+					<input type="number" id="studentPhone" name="studentPhone" class="form-control" required>
 				</div>
-				<div class="col-md-10">
-					<input type="number" id="studentPhone" name="studentPhone">
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-2">
-					<label for="studentLevel">Cấp độ học viên</label><br>
-				</div>
-				<div class="col-md-10">
-					<select name="studentLevel" id="studentLevel">
-					<?php
-					foreach ($DBLevel as $key => $value) {
-						echo '<option value="'.$value['level_id'].'" selected="selected">'.$value['level_number'].'</option>';
-					}
-					?>
-					</select>
-				</div>
-			</div>
-			<button onclick="ajaxUpdateStudentItem()">SỬA THÔNG TIN</button>
+				<button class ="btn btn-primary btn-md">SAVE</a></button>
+			</form>
 		</div>
 	</div>
 </div>
@@ -99,7 +58,7 @@
 <script type="text/javascript">
 $(document).ready(	
 	function(){
-		$('#studentItem').find('#studentID').on('change', function(evt) {
+		$('#formStudentUpdate').find('#studentID').on('change', function(evt) {
 	      var $target = $(evt.currentTarget);
 	      var student_id = $('#studentID').find('option:selected').val();
 	      loadItemStudent(student_id);
@@ -124,40 +83,36 @@ function loadItemStudent(student_id)
 	  		$('#studentAddress').val(ketqua[i].student_address);
 	  		$('#studentEmail').val(ketqua[i].student_email);
 	  		$('#studentPhone').val(ketqua[i].student_phone);
-	  		$('#studentLevel').val(ketqua[i].student_level);
 	  	}
 	});
 }
-function ajaxUpdateStudentItem()
-{
+var frm = $('#formStudentUpdate');
+frm.submit(function (e) {
+e.preventDefault();
 	var student_id = $('#studentID').val(),
 			student_name = $('#studentName').val(),
 			student_old = $('#studentOld').val(),
 			student_sex = $('#studentSex').val(),
 			student_address = $('#studentAddress').val(),
-			student_email = $('#studentEmail').val(),
-			student_phone = $('#studentPhone').val(),
-			student_level = $('#studentLevel').find('option:selected').val();
+			student_email = $('#studentEmail').val();
+			student_phone =$('#studentPhone').val()
 	var data = 
 	{
 		student_id:student_id,
 		student_name:student_name, 
-		student_old:student_old, 
+		student_old:student_old,
 		student_sex:student_sex, 
 		student_address: student_address, 
 		student_email: student_email,
-		student_phone:student_phone,
-		student_level:student_level
+		student_phone:student_phone
 	};
-		console.log(data);
-	$.ajax({
-      type: "POST",
-      url: '<?php echo $ajaxUpdateStudentItem; ?>', 
-      data: data,
-      dataType: 'json',
+$.ajax({
+  type: "POST",
+  url: '<?php echo $ajaxUpdateStudentItem; ?>', 
+  data: data,
+  dataType: 'json',
 	}).done(function(data) {
 		var kq = data.kq;
-		console.log(kq);
 	  	if(kq > 0)
 	  	{
 	  		alert("Sửa thông tin thành công  !");
@@ -168,5 +123,5 @@ function ajaxUpdateStudentItem()
 	  		alert("Sửa không thành công ");
 	  	}
 	});
-}
+});
 </script>

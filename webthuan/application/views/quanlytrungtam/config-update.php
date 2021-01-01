@@ -13,15 +13,12 @@
 			<h1 class="page-header">Cấu Hình</h1>
 		</div>
 	</div>
-	<div class="row">
-		<span> CHỌN THÔNG TIN SỬA CẤU HÌNH </span><br>
-		<div id="item-config">
-			<div class="row">
-				<div class="col-md-2">
-					<label for="configID">CHỌN ID CẤU HÌNH</label>
-				</div>
-				<div class="col-md-10">
-					<select id="item-config-id">
+	<div class="panel-body">
+		<div class="col-md-6">
+			<form id="formConfigUpdate" action="ajaxUpateConfig()" method="POST">
+				<div class="form-group">
+					<label>CHỌN ID CẦN SỬA THÔNG TIN</label>
+					<select class="form-control" id="item-config-id">
 						<?php 
 							foreach ($DBConfig as $key => $value) {
 								echo 
@@ -30,40 +27,28 @@
 						?>
 					</select>
 				</div>
-			</div>
-
-			<div class="row">
-				<div class="col-md-2">
+				<div class="form-group">
 					<label for="configField">TÊN CẤU HÌNH</label>
+					<input type="text" id="configField" class="form-control" required>
 				</div>
-				<div class="col-md-10">
-					<input type="text" id="configField"><br>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-2">
+				<div class="form-group">
 					<label for="configValue">GIÁ TRỊ</label>
+					<input type="text" id="configValue" class="form-control" required>
 				</div>
-				<div class="col-md-10">
-					<input type="text" id="configValue"><br>
+				<div class="form-group checkbox">
+					<label>
+						<input type="checkbox" id="configIsactive" name="configIsactive" value="1">Active
+					</label>
 				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-2">
-					<label for="configIsactive">Active</label><br>
-				</div>
-				<div class="col-md-10">
-					<input type="checkbox" id="configIsactive" name="configIsactive" value="1">
-				</div>
-			</div>
-			<button onclick="ajaxUpdateItemConfig()">LƯU THAY ĐỔI</button>
+				<button  class ="btn btn-primary btn-md">SAVE</a></button>
+			</form>
 		</div>
 	</div>
 </div>
 <script type="text/javascript">
 $(document).ready(  
 	function handleEvents(){
-	    $('#item-config').find('#item-config-id').on('change', function(evt) {
+	    $('#formConfigUpdate').on('change', function(evt) {
 	      var $target = $(evt.currentTarget);
 	      var id= $('#item-config-id').find('option:selected').val();
 	      ajaxSelectItemConfig(id);
@@ -81,35 +66,37 @@ function ajaxSelectItemConfig(id) {
   	var i;
   	for(i=0;i < ketqua.length;i++)
   	{
-  		$('#item-config').find('#configField').val(ketqua[i].config_name);
-  		$('#item-config').find('#configValue').val(ketqua[i].config_value);
+  		$('#formConfigUpdate').find('#configField').val(ketqua[i].config_name);
+  		$('#formConfigUpdate').find('#configValue').val(ketqua[i].config_value);
   		if(ketqua[i].config_isactive == 1)
   		{
-  			$('#item-config').find('#configIsactive').attr('checked', true); // Checks it
+  			$('#formConfigUpdate').find('#configIsactive').attr('checked', true); // Checks it
   		}
   		else
   		{
-  			$('#item-config').find('#configIsactive').attr('checked', false); // Unchecks it
+  			$('#formConfigUpdate').find('#configIsactive').attr('checked', false); // Unchecks it
   		}
   	}
   });
 }
 
-function ajaxUpdateItemConfig() {
-	var idConfig = $('#item-config-id').find('option:selected').val()
+var frm = $('#formConfigUpdate');
+frm.submit(function (e) {
+    e.preventDefault();
+    var idConfig = $('#item-config-id').find('option:selected').val()
 	var data = {configID: idConfig,configField: $('#configField').val(),configValue: $('#configValue').val()};
-  $.ajax({
+    $.ajax({
       type: "POST",
       url: '<?php echo $ajaxUpateConfig; ?>', 
       data: data,
       dataType: 'json',
-  }).done(function(data) {
-  	var ketqua = data.kq;
-  	if(ketqua >= 1)
-  	{
-  		alert("Sửa nội dung thành công !");
-  		window.location.href='<?php echo $pageConfiguration; ?>';
-  	}
-  });
-}
+ 	}).done(function(data) {
+ 		var ketqua = data.kq;
+	  	if(ketqua >= 1)
+	  	{
+	  		alert("Sửa nội dung thành công !");
+	  		window.location.href='<?php echo $pageConfig; ?>';
+	  	}
+ 	});
+});
 </script>

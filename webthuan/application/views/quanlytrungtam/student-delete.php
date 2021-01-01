@@ -24,6 +24,7 @@
 							<div class="studentID" id="studentID'.$ID.'">'.$ID.'</div>
 							<div class="studentName" id="studentName'.$ID.'">'.$value['student_name'].'</div>
 							<div class="studentOld" id="studentOld'.$ID.'">'.$value['student_old'].'</div>
+							<div class="studentIdentityCard" id="studentIdentityCard'.$ID.'">'.$value['student_identitycard'].'</div>
 							<div class="studentSex" id="studentSex'.$ID.'">'.$value['student_sex'].'</div>
 							<div class="studentAddress" id="studentAddress'.$ID.'">'.$value['student_address'].'</div>
 							<div class="studentEmail" id="studentEmail'.$ID.'">'.$value['student_email'].'</div>

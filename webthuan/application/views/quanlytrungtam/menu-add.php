@@ -12,66 +12,49 @@
 			<h1 class="page-header">Menu</h1>
 		</div>
 	</div>
-	<div class="row">
-		<div class="menu">
-			<div class="row">
-				<div class="col-md-2">
+	<div class="panel-body">
+		<div class="col-md-6">
+			<form id="formMenuAdd" action="ajaxCreatMenu()" method="POST">
+				<div class="form-group">
 					<label for="menuID">Id</label>
+					<input type="number" id="menuID" class="form-control">
 				</div>
-				<div class="col-md-10">
-					<input type="number" id="menuID"><br>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-2">
+				<div class="form-group">
 					<label for="menuName">Tên Menu</label>
+					<input type="text" id="menuName" class="form-control" required>
 				</div>
-				<div class="col-md-10">
-					<input type="text" id="menuName"><br>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-2">
+				<div class="form-group">
 					<label for="menuContent">Mô tả trang</label>
+					<input type="text" id="menuContent" class="form-control" required>
 				</div>
-				<div class="col-md-10">
-					<input type="text" id="menuContent"><br>
+				<div class="form-group">
+					<label for="menuURL">URL</label>
+					<input type="text" id="menuURL" class="form-control" required>
 				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-2">
-					<label for="menuIsactive">Active</label><br>
+				<div class="form-group checkbox">
+					<label>
+						<input type="checkbox" id="menuIsactive" name="menuIsactive" value="1">Active
+					</label>
 				</div>
-				<div class="col-md-10">
-					<input type="checkbox" id="menuIsactive" name="menuIsactive" value="1">
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-2">
+				<div class="form-group">
 					<label for="menuOrder">Submenu</label><br>
-				</div>
-				<div class="col-md-10">
-					<select name="menuOrder" id="menuOrder">
+					<select  name="menuOrder" id="menuOrder" class="form-control">
 						<option value="0" selected="selected">0</option>
 						<option value="1">1</option>
 					</select>
 				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-2">
-					<label for="parentID">Page Cha</label><br>
-				</div>
-				<div class="col-md-10">
-					<select name="parentID" id="parentID">
-					<?php
-					foreach ($DsDbMenuName as $key => $value) {
-						echo '<option value="'.$value['menu_name'].'" selected="selected">'.$value['menu_name'].'</option>';
-					}
-					?>
+				<div class="form-group">
+					<label for="parentID">Submenu</label><br>
+					<select  name="parentID" id="parentID" class="form-control">
+						<?php
+							foreach ($DsDbMenuName as $key => $value) {
+								echo '<option value="'.$value['menu_name'].'" selected="selected">'.$value['menu_name'].'</option>';
+							}
+						?>
 					</select>
 				</div>
-			</div>
-			<button onclick="ajaxCreateMenu()">Tạo</button>
+				<button class ="btn btn-primary btn-md">SAVE</a></button>
+			</form>
 		</div>
 	</div>
 </div>
@@ -81,23 +64,25 @@ $(document).ready(
 		
 	}
 );
-function ajaxCreateMenu()
-{
-	var checked = $('#menuIsactive').is(":checked");
+
+var frm = $('#formMenuAdd');
+frm.submit(function (e) {
+    e.preventDefault();
+    var checked = $('#menuIsactive').is(":checked");
 	var menu_order = $('#menuOrder').find('option:selected').val();
 	var parent_id = $('#parentID').find('option:selected').val();
-	console.log(parent_id);
+	var menu_url= $('#menuURL').val();
 	var menu_isactive = 0;
 	if(checked == true)
 	{
 		var menu_isactive = $('#menuIsactive').val();
-		data = {menu_name: $('#menuName').val(), menu_content: $('#menuContent').val(), menu_isactive:menu_isactive, menu_order:menu_order, parent_id:parent_id};
+		data = {menu_name: $('#menuName').val(), menu_content: $('#menuContent').val(), menu_url:menu_url, menu_isactive:menu_isactive, menu_order:menu_order, parent_id:parent_id};
 	}
 	else
 	{
-		data = {menu_name: $('#menuName').val(), menu_content: $('#menuContent').val(), menu_isactive:0, menu_order:menu_order, parent_id:parent_id};
+		data = {menu_name: $('#menuName').val(), menu_content: $('#menuContent').val(), menu_url:menu_url, menu_isactive:0, menu_order:menu_order, parent_id:parent_id};
 	}
-	$.ajax({
+    $.ajax({
       type: "POST",
       url: '<?php echo $ajaxCreatMenu; ?>', 
       data: data,
@@ -114,5 +99,5 @@ function ajaxCreateMenu()
 	  		alert("Tạo menu không thành công !");
 	  	}
  	});
-}
+});
 </script>

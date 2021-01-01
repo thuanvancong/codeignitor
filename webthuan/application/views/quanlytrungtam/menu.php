@@ -27,6 +27,7 @@
 			    <th>Trạng thái</th>
 			    <th>ParentID</th>
 			    <th>MenuOrder</th>
+			    <th>URL</th>
 			  </tr>';
 			foreach ($DBMenu as $key => $value) {
 				echo 
@@ -37,7 +38,8 @@
 					<td id="menu_content'.$value['menu_id'].'" class="menu_content">'.$value['menu_content'].'</td>
 					<td id="menu_isactive'.$value['menu_id'].'" class="menu_isactive">'.$value['menu_isactive'].'</td>
 					<td id="parent_id'.$value['menu_id'].'" class="parent_id">'.$value['parent_id'].'</td>
-					<td id="menu_order'.$value['menu_id'].'" class="menu_order">'.$value['menu_order'].'</td>';
+					<td id="menu_order'.$value['menu_id'].'" class="menu_order">'.$value['menu_order'].'</td>
+					<td id="menu_url'.$value['menu_id'].'" class="menu_url">'.$value['menu_url'].'</td>';
 			}
 			echo'</tr>';
 			echo'</table>';

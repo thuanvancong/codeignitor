@@ -12,98 +12,84 @@
 			<h1 class="page-header">User</h1>
 		</div>
 	</div>
-	<div class="row">
-		<div class="class">
-			<div class="row">
-				<div class="col-md-2">
+	<div class="panel-body">
+		<div class="col-md-6">
+			<form id="formUserAdd" action="ajaxCreateUser()" method="POST">
+				<div class="form-group">
 					<label for="userID">ID</label>
+					<input type="number" id="userID" class="form-control">
 				</div>
-				<div class="col-md-10">
-					<input type="number" id="userID"><br>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-2">
+				<div class="form-group">
 					<label for="userName">User</label>
+					<input type="text" id="userName" class="form-control" required>
 				</div>
-				<div class="col-md-10">
-					<input type="text" id="userName"><br>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-2">
+				<div class="form-group">
 					<label for="userPassword">Password</label>
+					<input type="password" id="userPassword" name="password" class="form-control" required>
 				</div>
-				<div class="col-md-10">
-					<input type="password" id="userPassword" name="password"><br>
+				<div class="form-group checkbox">
+					<label>
+						<input type="checkbox" id="userIsactive" name="userIsactive" value="1">Active
+					</label>
 				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-2">
-					<label for="userIsactive">Active</label><br>
-				</div>
-				<div class="col-md-10">
-					<input type="checkbox" id="userIsactive" name="userIsactive" value="1">
-				</div>
-			</div>
-			<button onclick="ajaxCreateUser()">Tạo</button>
+				<button class ="btn btn-primary btn-md">SAVE</a></button>
+			</form>
 		</div>
 	</div>
 </div>
 <script type="text/javascript">
-	 var password = '';
-	$(document).ready(	
-		function pushEvent(){
-			$('input[name=password]').keyup(function(){
-	        	password = $(this).val();
-	    	});
-		}
-	);
-
-	function ajaxCreateUser()
-	{
-		var checked = $('#userIsactive').is(":checked");
-		var user_id = $('#userID').val(),
-			user_name = $('#userName').val(),
-			user_pass = password,
-			user_isactive = $("#userIsactive").val();
-		if(checked == true)
-		{
-			var data = 
-			{
-				user_id:user_id,
-				user_name:user_name,
-				user_pass:password,
-				user_isactive:user_isactive
-			};
-		}
-		else
-		{
-			var data = 
-			{
-				user_id:user_id,
-				user_name:user_name,
-				user_pass:password,
-				user_isactive:0
-			};
-		}
-		
-		$.ajax({
-			type: "POST",
-		    url: '<?php echo $ajaxCreateUser; ?>', 
-		    data: data,
-		    dataType: 'json',
-		}).done(function(data) {
-	 		var kq = data.ketqua;
-		  	if(kq > 0)
-		  	{
-		  		alert("Tạo User thành công !");
-		  		window.location.href='<?php echo $pageUser; ?>';
-		  	}
-		  	else
-		  	{
-		  		alert("Tạo không thành công !");
-		  	}
-	  	});
+var password = '';
+$(document).ready(	
+	function pushEvent(){
+		$('input[name=password]').keyup(function(){
+        	password = $(this).val();
+    	});
 	}
+);
+var frm = $('#formUserAdd');
+frm.submit(function (e) {
+e.preventDefault();
+	var checked = $('#userIsactive').is(":checked");
+	var user_id = $('#userID').val(),
+		user_name = $('#userName').val(),
+		user_pass = password,
+		user_isactive = $("#userIsactive").val();
+	if(checked == true)
+	{
+		var data = 
+		{
+			user_id:user_id,
+			user_name:user_name,
+			user_pass:password,
+			user_isactive:user_isactive
+		};
+	}
+	else
+	{
+		var data = 
+		{
+			user_id:user_id,
+			user_name:user_name,
+			user_pass:password,
+			user_isactive:0
+		};
+	}
+$.ajax({
+  type: "POST",
+  url: '<?php echo $ajaxCreateUser; ?>', 
+  data: data,
+  dataType: 'json',
+	}).done(function(data) {
+		var kq = data.ketqua;
+	  	if(kq > 0)
+	  	{
+	  		alert("Tạo User thành công !");
+	  		window.location.href='<?php echo $pageUser; ?>';
+	  	}
+	  	else
+	  	{
+	  		alert("Tạo không thành công !");
+	  	}
+	});
+});
 </script>

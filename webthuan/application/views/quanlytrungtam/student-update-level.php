@@ -12,53 +12,42 @@
 			<h1 class="page-header">Học viên</h1>
 		</div>
 	</div>
-	<div class="row">
-		<div class="" id="studentItem">
-			<div class="row">
-				<div class="col-md-2">
+	<div class="panel-body">
+		<div class="col-md-6">
+			<form id="formStudentUpdateCost" action="ajaxUpdateLevelStudent()" method="POST">
+				<div class="form-group">
 					<label for="studentID">CHỌN ID CẦN SỬA</label>
-				</div>
-				<div class="col-md-10">
-					<select id="studentID">
+					<select class="form-control" id="studentID">
 						<?php 
 							foreach ($DBStudent as $key => $value) {
-								echo 
-									'<option value="'.$value['student_id'].'" selected>'.$value['student_id'].'</option>';
+								echo '<option value="'.$value['student_id'].'" selected>'.$value['student_id'].'</option>';
 							}
 						?>
 					</select>
 				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-2">
+				<div class="form-group">
 					<label for="studentName">Tên học viên</label>
+					<input type="text" id="studentName" class="form-control" required>
 				</div>
-				<div class="col-md-10">
-					<input type="text" id="studentName"><br>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-2">
-					<label for="studentLevel">Cấp độ học viên</label><br>
-				</div>
-				<div class="col-md-10">
-					<select name="studentLevel" id="studentLevel">
-					<?php
-					foreach ($DBLevel as $key => $value) {
-						echo '<option value="'.$value['level_id'].'" selected="selected">'.$value['level_number'].'</option>';
-					}
-					?>
+				<div class="form-group">
+					<label for="studentLevel">Cấp độ học viên</label>
+					<select name="studentLevel" id="studentLevel" class="form-control">
+						<?php
+							foreach ($DBLevel as $key => $value) {
+								echo '<option value="'.$value['level_id'].'" selected="selected">'.$value['level_number'].'</option>';
+							}
+						?>
 					</select>
 				</div>
-			</div>
-			<button onclick="ajaxUpdateLevelStudent()">Cập nhật cấp độ</button>
+				<button class ="btn btn-primary btn-md">SAVE</a></button>
+			</form>
 		</div>
 	</div>
 </div>
 <script type="text/javascript">
 $(document).ready(	
 	function(){
-		$('#studentItem').find('#studentID').on('change', function(evt) {
+		$('#formStudentUpdateCost').find('#studentID').on('change', function(evt) {
 	      var $target = $(evt.currentTarget);
 	      var student_id = $('#studentID').find('option:selected').val();
 	      loadItemStudent(student_id);
@@ -83,8 +72,36 @@ function loadItemStudent(student_id)
 	});
 }
 
-function ajaxUpdateLevelStudent()
-{
+// function ajaxUpdateLevelStudent()
+// {
+// 	var student_id = $('#studentID').val(),
+// 		student_level = $('#studentLevel').find('option:selected').val();
+// 	var data = 
+// 	{
+// 		student_id:student_id,
+// 		student_level:student_level
+// 	};
+// 	$.ajax({
+//       type: "POST",
+//       url: '<?php echo $ajaxUpdateLevelStudent; ?>', 
+//       data: data,
+//       dataType: 'json',
+// 	}).done(function(data) {
+// 		var kq = data.kq;
+// 	  	if(kq > 0)
+// 	  	{
+// 	  		alert("Sửa thông tin thành công  !");
+// 	  		window.location.href='<?php echo $pageStudent; ?>';
+// 	  	}
+// 	  	else
+// 	  	{
+// 	  		alert("Sửa không thành công ");
+// 	  	}
+// 	});
+// }
+var frm = $('#formStudentUpdateCost');
+frm.submit(function (e) {
+e.preventDefault();
 	var student_id = $('#studentID').val(),
 		student_level = $('#studentLevel').find('option:selected').val();
 	var data = 
@@ -92,11 +109,11 @@ function ajaxUpdateLevelStudent()
 		student_id:student_id,
 		student_level:student_level
 	};
-	$.ajax({
-      type: "POST",
-      url: '<?php echo $ajaxUpdateLevelStudent; ?>', 
-      data: data,
-      dataType: 'json',
+$.ajax({
+  type: "POST",
+  url: '<?php echo $ajaxUpdateLevelStudent; ?>', 
+  data: data,
+  dataType: 'json',
 	}).done(function(data) {
 		var kq = data.kq;
 	  	if(kq > 0)
@@ -109,6 +126,6 @@ function ajaxUpdateLevelStudent()
 	  		alert("Sửa không thành công ");
 	  	}
 	});
-}
+});
 </script>
 </script>

@@ -1119,8 +1119,8 @@ table#table-config
 .groupStudent > div
 {
   display: inline-block;
-  width: 11.1%;
-  font-size: 10px;
+  width: 10%;
+  font-size: 12px;
   margin: 0;
   padding: 0;
   vertical-align: middle;
@@ -1180,7 +1180,7 @@ table#table-config
   text-align: center;
 }
 .courseDelete, .classDelete, .studentDelete, .teacherDelete, .userDelete, .roleDelete em.fa.fa-trash {
-    color: #444444;
+  color: red
 }
 
 .student-item

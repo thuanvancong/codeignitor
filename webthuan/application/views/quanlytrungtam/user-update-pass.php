@@ -12,14 +12,12 @@
 			<h1 class="page-header">User</h1>
 		</div>
 	</div>
-	<div class="row">
-		<div class="" id="userItem">
-			<div class="row">
-				<div class="col-md-2">
+	<div class="panel-body">
+		<div class="col-md-6">
+			<form id="formUserUpdatePass" action="ajaxUpdatePassUserItem()" method="POST">
+				<div class="form-group">
 					<label for="userID">CHỌN ID CẦN SỬA</label>
-				</div>
-				<div class="col-md-10">
-					<select id="userID">
+					<select id="userID" class="form-control">
 						<?php 
 							foreach ($DBUser as $key => $value) {
 								echo 
@@ -28,40 +26,29 @@
 						?>
 					</select>
 				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-2">
+				<div class="form-group">
 					<label for="userName">User</label>
+					<input type="text" id="userName" class="form-control" required>
 				</div>
-				<div class="col-md-10">
-					<input type="text" id="userName"><br>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-2">
+				<div class="form-group">
 					<label for="userPassword">Nhập mật khẩu cũ</label>
+					<input type="Password" id="userPasswordNew" name="password" class="form-control" required>
 				</div>
-				<div class="col-md-10">
-					<input type="Password" id="userPassword" name="password"><br>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-2">
+				<div class="form-group">
 					<label for="userPasswordNew">Nhập mật khẩu mới</label>
+					<input type="Password" id="userPassword" name="passwordNew" class="form-control" required>
 				</div>
-				<div class="col-md-10">
-					<input type="Password" id="userPasswordNew" name="passwordNew"><br>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-2">
+				<div class="form-group">
 					<label for="userPasswordConfirm">Xác nhận lại mật khẩu</label>
+					<input type="Password" id="userPasswordConfirm" name="passwordConfirm" class="form-control" required>
 				</div>
-				<div class="col-md-10">
-					<input type="Password" id="userPasswordConfirm" name="passwordConfirm"><br>
+				<div class="form-group checkbox">
+					<label>
+						<input type="checkbox" id="userIsactive" name="userIsactive" value="1">Active
+					</label>
 				</div>
-			</div>
-			<button onclick="ajaxUpdatePassUserItem()">Cập Nhật Mật Khẩu</button>
+				<button class ="btn btn-primary btn-md">SAVE</a></button>
+			</form>
 		</div>
 	</div>
 </div>
@@ -69,7 +56,7 @@
 $(document).ready(	
 	function() 
 	{
-		$('#userItem').find('#userID').on('change', function(evt) {
+		$('#formUserUpdatePass').find('#userID').on('change', function(evt) {
 	      var $target = $(evt.currentTarget);
 	      var user_id = $('#userID').find('option:selected').val();
 	      loadItemUser(user_id);
@@ -116,8 +103,10 @@ function loadItemUser(user_id)
 	  	}
 	});
 }
-function ajaxUpdatePassUserItem()
-{
+
+var frm = $('#formUserUpdatePass');
+frm.submit(function (e) {
+e.preventDefault();
 	var data = {};
 	/* Check xem 2 input pass new = confirm */
 	if(passwordNew==passwordConfirm)
@@ -149,5 +138,5 @@ function ajaxUpdatePassUserItem()
 	{
 		alert("2 mật khẩu mới nhập không trùng khớp");
 	}
-}
+});
 </script>

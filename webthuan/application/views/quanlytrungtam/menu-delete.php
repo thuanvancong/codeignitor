@@ -12,39 +12,32 @@
 			<h1 class="page-header">Menu</h1>
 		</div>
 	</div>
-	<div class="row">
-		<div class="menu" id="menuItem">
-			<div class="row">
-				<div class="col-md-2">
-					<label for="menuID">CHỌN ID CẤU HÌNH</label>
-				</div>
-				<div class="col-md-10">
-					<select id="menuID">
+	<div class="panel-body">
+		<div class="col-md-6">
+			<form id="formMenuDelete" action="ajaxDeleteItemMenu()" method="POST">
+				<div class="form-group">
+					<label for="menuID">CHỌN ID</label>
+					<select id="menuID" class="form-control">
 						<?php 
 							foreach ($DBMenu as $key => $value) {
-								echo 
-									'<option value="'.$value['menu_id'].'" selected>'.$value['menu_id'].'</option>';
+								echo '<option value="'.$value['menu_id'].'" selected>'.$value['menu_id'].'</option>';
 							}
 						?>
 					</select>
 				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-2">
+				<div class="form-group">
 					<label for="menuName">Tên Menu</label>
+					<input type="text" id="menuName" class="form-control">
 				</div>
-				<div class="col-md-10">
-					<input type="text" id="menuName"><br>
-				</div>
-			</div>
-			<button onclick="ajaxDeleteMenu()">Xóa page</button>
+				<button class ="btn btn-primary btn-md">DELETE</a></button>
+			</form>
 		</div>
 	</div>
 </div>
 <script type="text/javascript">
 $(document).ready(	
 	function(){
-		$('#menuItem').find('#menuID').on('change', function(evt) {
+		$('#formMenuDelete').find('#menuID').on('change', function(evt) {
 	      var $target = $(evt.currentTarget);
 	      var id = $('#menuID').find('option:selected').val();
 	      loadItemMenu(id);
@@ -63,20 +56,22 @@ function loadItemMenu(id)
 	  	var i;
 	  	for(i=0;i < ketqua.length;i++)
 	  	{
-	  		$('#menuItem').find('#menuName').val(ketqua[i].menu_name);
+	  		$('#formMenuDelete').find('#menuName').val(ketqua[i].menu_name);
 	  	}
 	});
 }
-function ajaxDeleteMenu()
-{
-	var id = $('#menuID').find('option:selected').val();
-	$.ajax({
+
+var frm = $('#formMenuDelete');
+frm.submit(function (e) {
+    e.preventDefault();
+    var id = $('#menuID').find('option:selected').val();
+    $.ajax({
       type: "POST",
       url: '<?php echo $ajaxDeleteItemMenu; ?>', 
       data:{menu_id:id},
       dataType: 'json',
-	}).done(function(data) {
-		var kq = data.ketqua;
+ 	}).done(function(data) {
+ 		var kq = data.ketqua;
 	  	if(kq == 1)
 	  	{
 	  		alert("Xóa thành công  !");
@@ -86,6 +81,6 @@ function ajaxDeleteMenu()
 	  	{
 	  		alert("Xóa không thành công ! Có ràng buộc page con");
 	  	}
-	});
-}
+ 	});
+});
 </script>

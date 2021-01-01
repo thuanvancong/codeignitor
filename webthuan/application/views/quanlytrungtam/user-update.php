@@ -12,14 +12,12 @@
 			<h1 class="page-header">User</h1>
 		</div>
 	</div>
-	<div class="row">
-		<div class="" id="userItem">
-			<div class="row">
-				<div class="col-md-2">
+	<div class="panel-body">
+		<div class="col-md-6">
+			<form id="formUserUpdate" action="ajaxUpdateUserItem()" method="POST">
+				<div class="form-group">
 					<label for="userID">CHỌN ID CẦN SỬA</label>
-				</div>
-				<div class="col-md-10">
-					<select id="userID">
+					<select id="userID" class="form-control">
 						<?php 
 							foreach ($DBUser as $key => $value) {
 								echo 
@@ -28,31 +26,24 @@
 						?>
 					</select>
 				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-2">
+				<div class="form-group">
 					<label for="userName">User</label>
+					<input type="text" id="userName" class="form-control" required>
 				</div>
-				<div class="col-md-10">
-					<input type="text" id="userName"><br>
+				<div class="form-group checkbox">
+					<label>
+						<input type="checkbox" id="userIsactive" name="userIsactive" value="1">Active
+					</label>
 				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-2">
-					<label for="userIsactive">Active</label><br>
-				</div>
-				<div class="col-md-10">
-					<input type="checkbox" id="userIsactive" name="userIsactive" value="1">
-				</div>
-			</div>
-			<button onclick="ajaxUpdateUserItem()">SỬA THÔNG TIN</button>
+				<button class ="btn btn-primary btn-md">SAVE</a></button>
+			</form>
 		</div>
 	</div>
 </div>
 <script type="text/javascript">
 $(document).ready(	
 	function(){
-		$('#userItem').find('#userID').on('change', function(evt) {
+		$('#formUserUpdate').find('#userID').on('change', function(evt) {
 	      var $target = $(evt.currentTarget);
 	      var user_id = $('#userID').find('option:selected').val();
 	      loadItemUser(user_id);
@@ -83,9 +74,9 @@ function loadItemUser(user_id)
 	  	}
 	});
 }
-
-function ajaxUpdateUserItem()
-{
+var frm = $('#formUserUpdate');
+frm.submit(function (e) {
+e.preventDefault();
 	var user_id = $('#userID').val(),
 		user_name = $('#userName').val(),
 		user_isactive = $('#userIsactive').val()
@@ -95,11 +86,11 @@ function ajaxUpdateUserItem()
 		user_name:user_name,
 		user_isactive:user_isactive
 	};
-	$.ajax({
-      type: "POST",
-      url: '<?php echo $ajaxUpdateUserItem; ?>', 
-      data: data,
-      dataType: 'json',
+$.ajax({
+  type: "POST",
+  url: '<?php echo $ajaxUpdateUserItem; ?>', 
+  data: data,
+  dataType: 'json',
 	}).done(function(data) {
 		var kq = data.kq;
 	  	if(kq > 0)
@@ -112,5 +103,5 @@ function ajaxUpdateUserItem()
 	  		alert("Sửa không thành công ");
 	  	}
 	});
-}
+});
 </script>

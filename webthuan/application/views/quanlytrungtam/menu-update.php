@@ -12,90 +12,72 @@
 			<h1 class="page-header">Menu</h1>
 		</div>
 	</div>
-	<div class="row">
-		<div class="menu" id="menuItem">
-			<div class="row">
-				<div class="col-md-2">
-					<label for="menuID">CHỌN ID CẤU HÌNH</label>
-				</div>
-				<div class="col-md-10">
-					<select id="menuID">
+	<div class="panel-body">
+		<div class="col-md-6">
+			<form id="formMenuUpdate" action="ajaxUpdateItemMenu()" method="POST">
+				<div class="form-group">
+					<label for="menuID">CHỌN ID</label>
+					<select id="menuID" class="form-control">
 						<?php 
 							foreach ($DBMenu as $key => $value) {
-								echo 
-									'<option value="'.$value['menu_id'].'" selected>'.$value['menu_id'].'</option>';
+								echo '<option value="'.$value['menu_id'].'" selected>'.$value['menu_id'].'</option>';
 							}
 						?>
 					</select>
 				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-2">
+				<div class="form-group">
 					<label for="menuName">Tên Menu</label>
+					<input type="text" id="menuName" class="form-control" required>
 				</div>
-				<div class="col-md-10">
-					<input type="text" id="menuName"><br>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-2">
+				<div class="form-group">
 					<label for="menuContent">Mô tả trang</label>
+					<input type="text" id="menuContent" class="form-control" required>
 				</div>
-				<div class="col-md-10">
-					<input type="text" id="menuContent"><br>
+				<div class="form-group">
+					<label for="menuURL">URL</label>
+					<input type="text" id="menuURL" class="form-control" required>
 				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-2">
-					<label for="menuIsactive">Active</label><br>
+				<div class="form-group checkbox">
+					<label>
+						<input type="checkbox" id="menuIsactive" name="menuIsactive" value="1">Active
+					</label>
 				</div>
-				<div class="col-md-10">
-					<input type="checkbox" id="menuIsactive" name="menuIsactive" value="1">
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-2">
+				<div class="form-group">
 					<label for="menuOrder">Submenu</label><br>
-				</div>
-				<div class="col-md-10">
-					<select name="menuOrder" id="menuOrder">
+					<select  name="menuOrder" id="menuOrder" class="form-control">
 						<option value="0" selected="selected">0</option>
 						<option value="1">1</option>
 					</select>
 				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-2">
-					<label for="parentID">Page Cha</label><br>
-				</div>
-				<div class="col-md-10">
-					<select name="parentID" id="parentID">
-					<!-- <?php
-					foreach ($DsDbMenuName as $key => $value) {
-						echo '<option value="'.$value['menu_name'].'" selected="selected">'.$value['menu_name'].'</option>';
-					}
-					?> -->
+				<div class="form-group">
+					<label for="parentID">Submenu</label><br>
+					<select  name="parentID" id="parentID" class="form-control">
+						<!-- <?php
+							foreach ($DsDbMenuName as $key => $value) {
+								echo '<option value="'.$value['menu_name'].'" selected="selected">'.$value['menu_name'].'</option>';
+							}
+						?> -->
 					</select>
 				</div>
-			</div>
-			<button onclick="ajaxUpdateMenuItem()">Tạo</button>
-			<div class ="note">
-				<br><SPAN>Lưu ý</SPAN><br>
-				<SPAN>Submenu = 0 : không có page cha</SPAN></div><br>
-				<SPAN>Submenu = 1 : chọn 1 là page con</SPAN>
-			</div>
+				<button class ="btn btn-primary btn-md">SAVE</a></button>
+				<div class ="note">
+					<br><SPAN>Lưu ý</SPAN><br>
+					<SPAN>Submenu = 0 : không có page cha</SPAN></div><br>
+					<SPAN>Submenu = 1 : chọn 1 là page con</SPAN>
+				</div>
+			</form>
 		</div>
 	</div>
 </div>
 <script type="text/javascript">
 $(document).ready(	
 	function(){
-		$('#menuItem').find('#menuID').on('change', function(evt) {
+		$('#formMenuUpdate').find('#menuID').on('change', function(evt) {
 	      var $target = $(evt.currentTarget);
 	      var id = $('#menuID').find('option:selected').val();
 	      loadItemMenu(id);
 	    });
-	    $('#menuItem').find('#menuOrder').on('change', function(evt) {
+	    $('#formMenuUpdate').find('#menuOrder').on('change', function(evt) {
 	      var $target = $(evt.currentTarget);
 	      var idMenuOrder = $('#menuOrder').find('option:selected').val();
 	      loadSelectSubmenu(idMenuOrder);
@@ -128,23 +110,25 @@ function loadItemMenu(id)
 	  	var i;
 	  	for(i=0;i < ketqua.length;i++)
 	  	{
-	  		$('#menuItem').find('#menuName').val(ketqua[i].menu_name);
-	  		$('#menuItem').find('#menuContent').val(ketqua[i].menu_content);
+	  		$('#formMenuUpdate').find('#menuName').val(ketqua[i].menu_name);
+	  		$('#formMenuUpdate').find('#menuContent').val(ketqua[i].menu_content);
+	  		$('#formMenuUpdate').find('#menuURL').val(ketqua[i].menu_url);
 	  		if(ketqua[i].menu_isactive == 1)
 	  		{
-	  			$('#menuItem').find('#menuIsactive').attr('checked', true); // Checks it
+	  			$('#formMenuUpdate').find('#menuIsactive').attr('checked', true); // Checks it
 	  		}
 	  		else
 	  		{	
-	  			$('#menuItem').find('#menuIsactive').attr('checked', false); // Unchecks it
+	  			$('#formMenuUpdate').find('#menuIsactive').attr('checked', false); // Unchecks it
 	  		}
 	  	}
 	});
 }
 
-function ajaxUpdateMenuItem()
-{
-	var menu_id = $('#menuItem').find('option:selected').val();
+var frm = $('#formMenuUpdate');
+frm.submit(function (e) {
+    e.preventDefault();
+    var menu_id = $('#formMenuUpdate').find('option:selected').val();
 	var menu_order = $('#menuOrder').find('option:selected').val();
 	if(menu_order == 0)
 	{
@@ -156,23 +140,25 @@ function ajaxUpdateMenuItem()
 	}
 	var menu_name =$('#menuName').val();
 	var menu_content =$('#menuContent').val();
+	var menu_url = $('#menuURL').val();
 	var menu_isactive = $('#menuIsactive').val();
 	var dataget = {
 		menu_id: menu_id, 
-		menu_name:menu_name, 
-		menu_content:menu_content, 
+		menu_name:menu_name,
+		menu_content:menu_content,
+		menu_url:menu_url,
 		menu_isactive:menu_isactive, 
 		menu_order:menu_order,
 		parent_id:parent_id
 	};
 
-	$.ajax({
+    $.ajax({
       type: "POST",
       url: '<?php echo $ajaxUpdateItemMenu; ?>', 
       data: dataget,
       dataType: 'json',
-	}).done(function(data) {
-		var kq = data.ketqua;
+ 	}).done(function(data) {
+ 		var kq = data.ketqua;
 	  	if(kq == 1)
 	  	{
 	  		alert("Sửa thông tin thành công  !");
@@ -182,6 +168,6 @@ function ajaxUpdateMenuItem()
 	  	{
 	  		alert("Sửa không thành công ! Có ràng buộc page con");
 	  	}
-	});
-}
+ 	});
+});
 </script>

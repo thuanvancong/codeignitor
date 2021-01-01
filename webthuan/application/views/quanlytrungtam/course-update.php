@@ -12,47 +12,36 @@
 			<h1 class="page-header">Khóa học</h1>
 		</div>
 	</div>
-	<div class="row">
-		<div class="course" id="couseItem">
-			<div class="row">
-				<div class="col-md-2">
+	<div class="panel-body">
+		<div class="col-md-6">
+			<form id="formCourseUpdate" action="ajaxUpdateCourseItem()" method="POST">
+				<div class="form-group">
 					<label for="courseID">ID</label>
-				</div>
-				<div class="col-md-10">
-					<select id="courseID">
+					<select id="courseID" class="form-control">
 						<?php 
 							foreach ($DBCourse as $key => $value) {
-								echo 
-									'<option value="'.$value['course_id'].'" selected>'.$value['course_id'].'</option>';
+								echo '<option value="'.$value['course_id'].'" selected>'.$value['course_id'].'</option>';
 							}
 						?>
 					</select>
 				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-2">
+				<div class="form-group">
 					<label for="courseName">Tên khóa học</label>
+					<input type="text" id="courseName" class="form-control" required>
 				</div>
-				<div class="col-md-10">
-					<input type="text" id="courseName"><br>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-2">
+				<div class="form-group">
 					<label for="coursePrice">Giá khóa học</label>
+					<input type="number" id="coursePrice" class="form-control" required>
 				</div>
-				<div class="col-md-10">
-					<input type="number" id="coursePrice"><br>
-				</div>
-			</div>
-			<button onclick="ajaxUpdateCourseItem()">Sửa</button>
+				<button class ="btn btn-primary btn-md">SAVE</a></button>
+			</form>
 		</div>
 	</div>
 </div>
 <script type="text/javascript">
 $(document).ready(	
 	function(){
-		$('#couseItem').find('#courseID').on('change', function(evt) {
+		$('#formCourseUpdate').find('#courseID').on('change', function(evt) {
 	      var $target = $(evt.currentTarget);
 	      var id = $('#courseID').find('option:selected').val();
 	      loadItemCourse(id);
@@ -78,21 +67,22 @@ function loadItemCourse(id)
 	});
 }
 
-function ajaxUpdateCourseItem()
-{
-	var course_id = $('#courseID').find('option:selected').val();
+var frm = $('#formCourseUpdate');
+frm.submit(function (e) {
+    e.preventDefault();
+    var course_id = $('#courseID').find('option:selected').val();
 	data = {
 		course_id : course_id,
 		course_name : $('#courseName').val(),
 		course_price : $('#coursePrice').val(),
 	}
-	$.ajax({
+    $.ajax({
       type: "POST",
       url: '<?php echo $ajaxUpdateCourseItem; ?>', 
       data: data,
       dataType: 'json',
-	}).done(function(data) {
-		var kq = data.kq;
+ 	}).done(function(data) {
+ 		var kq = data.kq;
 	  	if(kq == 1)
 	  	{
 	  		alert("Sửa thông tin thành công  !");
@@ -102,6 +92,33 @@ function ajaxUpdateCourseItem()
 	  	{
 	  		alert("Sửa không thành công");
 	  	}
-	});
-}
+ 	});
+});
+
+// function ajaxUpdateCourseItem()
+// {
+// 	var course_id = $('#courseID').find('option:selected').val();
+// 	data = {
+// 		course_id : course_id,
+// 		course_name : $('#courseName').val(),
+// 		course_price : $('#coursePrice').val(),
+// 	}
+// 	$.ajax({
+//       type: "POST",
+//       url: '<?php echo $ajaxUpdateCourseItem; ?>', 
+//       data: data,
+//       dataType: 'json',
+// 	}).done(function(data) {
+// 		var kq = data.kq;
+// 	  	if(kq == 1)
+// 	  	{
+// 	  		alert("Sửa thông tin thành công  !");
+// 	  		window.location.href='<?php echo $pageCourse; ?>';
+// 	  	}
+// 	  	else
+// 	  	{
+// 	  		alert("Sửa không thành công");
+// 	  	}
+// 	});
+// }
 </script>

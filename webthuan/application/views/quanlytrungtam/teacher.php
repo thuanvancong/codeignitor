@@ -4,12 +4,12 @@
 			<li><a href="#">
 				<em class="fa fa-folder-o"></em>
 			</a></li>
-			<li class="active">QUẢN LÝ HỌC VIÊN</li>
+			<li class="active">QUẢN LÝ GIÁO VIÊN</li>
 		</ol>
 	</div>
 	<div class="row">
 		<div class="col-lg-12">
-			<h1 class="page-header">Học viên</h1>
+			<h1 class="page-header">Giáo viên</h1>
 		</div>
 	</div>
 	<div class="btn">

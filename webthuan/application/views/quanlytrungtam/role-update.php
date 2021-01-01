@@ -12,14 +12,12 @@
 			<h1 class="page-header">Role</h1>
 		</div>
 	</div>
-	<div class="row">
-		<div class="" id="roleItem">
-			<div class="row">
-				<div class="col-md-2">
+	<div class="panel-body">
+		<div class="col-md-6">
+			<form id="formRoleUpdate" action="ajaxUpdateRoleItem()" method="POST">
+				<div class="form-group">
 					<label for="roleID">CHỌN ID CẦN SỬA</label>
-				</div>
-				<div class="col-md-10">
-					<select id="roleID">
+					<select id="roleID" class="form-control">
 						<?php 
 							foreach ($DBRole as $key => $value) {
 								echo 
@@ -28,39 +26,28 @@
 						?>
 					</select>
 				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-2">
+				<div class="form-group">
 					<label for="roleName">Role</label>
+					<input type="text" id="roleName" class="form-control" required>
 				</div>
-				<div class="col-md-10">
-					<input type="text" id="roleName"><br>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-2">
+				<div class="form-group">
 					<label for="Router">Router</label>
+					<input type="text" id="Router" class="form-control" required>
 				</div>
-				<div class="col-md-10">
-					<input type="text" id="Router"><br>
+				<div class="form-group checkbox">
+					<label>
+						<input type="checkbox" id="roleIsactive" name="roleIsactive" value="1">Active
+					</label>
 				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-2">
-					<label for="roleIsactive">Active</label><br>
-				</div>
-				<div class="col-md-10">
-					<input type="checkbox" id="roleIsactive" name="roleIsactive" value="1">
-				</div>
-			</div>
-			<button onclick="ajaxUpdateRoleItem()">SỬA THÔNG TIN</button>
+				<button class ="btn btn-primary btn-md">SAVE</a></button>
+			</form>
 		</div>
 	</div>
 </div>
 <script type="text/javascript">
 $(document).ready(	
 	function(){
-		$('#roleItem').find('#roleID').on('change', function(evt) {
+		$('#formRoleUpdate').find('#roleID').on('change', function(evt) {
 	      var $target = $(evt.currentTarget);
 	      var role_id = $('#roleID').find('option:selected').val();
 	      loadItemRole(role_id);
@@ -93,8 +80,9 @@ function loadItemRole(role_id)
 	});
 }
 
-function ajaxUpdateRoleItem()
-{
+var frm = $('#formRoleUpdate');
+frm.submit(function (e) {
+e.preventDefault();
 	var role_id = $('#roleID').val(),
 		role_name = $('#roleName').val(),
 		router = $('#Router').val(),
@@ -123,5 +111,5 @@ function ajaxUpdateRoleItem()
 	  		alert("Sửa không thành công ");
 	  	}
 	});
-}
+});
 </script>

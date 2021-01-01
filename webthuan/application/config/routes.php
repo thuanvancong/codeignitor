@@ -49,6 +49,62 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
-$route['default_controller'] = 'welcome';
-$route['404_override'] = '';
+$route['default_controller'] = 'Login_Controller/pageLogin';
+$route['404_override'] = 'Custom404';
 $route['translate_uri_dashes'] = FALSE;
+$route['accessdenied'] = 'Accessdenied_Controller';
+$route['homepage'] = 'quanlytrungtam';
+
+/*---- ĐỊNH DANH ROUTER MENU ---*/
+$route['menu/add'] = 'Menu/add';
+$route['menu/update'] = 'Menu/update';
+$route['menu/delete'] = 'Menu/delete';
+$route['menu/index'] ='Menu/index';
+
+/*---- ĐỊNH DANH ROUTER CONFIG ---*/
+$route['config/add'] = 'Config/add';
+$route['config/update'] = 'Config/update';
+$route['config/delete'] = 'Config/delete';
+$route['config'] ='Config/index';
+
+/*---- ĐỊNH DANH ROUTER COURSE ---*/
+$route['course/add'] = 'Course/add';
+$route['course/update'] = 'Course/update';
+$route['course/delete()'] = 'Course/delete';
+$route['course'] = 'Course/index';
+
+/*---- ĐỊNH DANH ROUTER CLASS ---*/
+$route['class/add'] = 'Class_CI/add';
+$route['class/update'] = 'Class_CI/update';
+$route['class/delete'] = 'Class_CI/delete';
+$route['class/index'] = 'Class_CI/index';
+
+/*---- ĐỊNH DANH ROUTER STUDENT ---*/
+$route['student/add'] = 'Student/add';
+$route['student/update'] = 'Student/update';
+$route['student/delete'] = 'Student/delete';
+$route['student/updatelevel'] = 'Student/updatelevel';
+$route['student'] = 'Student/index';
+
+/*---- ĐỊNH DANH ROUTER TEACHER ---*/
+$route['teacher/add'] = 'Teacher/add';
+$route['teacher/update'] = 'Teacher/update';
+$route['teacher/delete'] = 'Teacher/delete';
+$route['teacher'] = 'Teacher/index';
+
+/*---- ĐỊNH DANH ROUTER USER ---*/
+$route['user/add'] = 'Users/add';
+$route['user/update'] = 'Users/update';
+$route['user/delete'] = 'Users/delete';
+$route['user/updatepass'] = 'Users/updatepass';
+$route['user/userrole'] = 'Userrole/index';
+$route['user'] = 'Users/index';
+
+/*---- ĐỊNH DANH ROUTER ROLE ---*/
+$route['role/add'] = 'Role/add';
+$route['role/update'] = 'Role/update';
+$route['role/delete'] = 'Role/delete';
+$route['role'] = 'Role/index';
+
+/*---- ĐỊNH DANH ROUTER LOGIN ---*/
+$route['login'] = 'Login_Controller/pageLogin';

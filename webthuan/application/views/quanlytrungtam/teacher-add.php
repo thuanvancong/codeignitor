@@ -12,90 +12,72 @@
 			<h1 class="page-header">Giáo viên</h1>
 		</div>
 	</div>
-	<div class="row">
-		<div class="class">
-			<div class="row">
-				<div class="col-md-2">
+	<div class="panel-body">
+		<div class="col-md-6">
+			<form id="formTeacherAdd" action="ajaxCreateTeacher()" method="POST">
+				<div class="form-group">
 					<label for="teacherID">ID</label>
+					<input type="number" id="teacherID" class="form-control">
 				</div>
-				<div class="col-md-10">
-					<input type="number" id="teacherID"><br>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-2">
+				<div class="form-group">
 					<label for="teacherName">Tên Giáo Viên</label>
+					<input type="text" id="teacherName" class="form-control" required>
 				</div>
-				<div class="col-md-10">
-					<input type="text" id="teacherName"><br>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-2">
+				<div class="form-group">
 					<label for="teacherOld">Tuổi</label>
+					<input type="number" id="teacherOld" class="form-control" required>
 				</div>
-				<div class="col-md-10">
-					<input type="number" id="teacherOld"><br>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-2">
+				<div class="form-group">
 					<label for="teacherSex">Giới tính</label><br>
+					<input type="text" id="teacherSex" class="form-control" required>
 				</div>
-				<div class="col-md-10">
-					<input type="text" id="teacherSex" name="teacherSex">
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-2">
+				<div class="form-group">
 					<label for="teacherAddress">Địa chỉ</label><br>
+					<input type="text" id="teacherAddress" class="form-control" required>
 				</div>
-				<div class="col-md-10">
-					<input type="text" id="teacherAddress" name="teacherAddress">
-				</div>
-			</div>
-			<button onclick="ajaxCreateTeacher()">Tạo</button>
+				<button class ="btn btn-primary btn-md">SAVE</a></button>
+			</form>
 		</div>
 	</div>
 </div>
 <script type="text/javascript">
-	$(document).ready(	
-		function(){
-			
-		}
-	);
-	function ajaxCreateTeacher()
-	{
-
-		var teacher_id = $('#teacherID').val(),
-			teacher_name = $('#teacherName').val(),
-			teacher_old = $('#teacherOld').val(),
-			teacher_sex = $('#teacherSex').val(),
-			teacher_address = $('#teacherAddress').val()
-		var data = 
-		{
-			teacher_id:teacher_id,
-			teacher_name:teacher_name, 
-			teacher_old:teacher_old, 
-			teacher_sex:teacher_sex, 
-			teacher_address: teacher_address
-		};
-		$.ajax({
-			type: "POST",
-		    url: '<?php echo $ajaxCreateTeacher; ?>', 
-		    data: data,
-		    dataType: 'json',
-		}).done(function(data) {
-	 		var kq = data.ketqua;
-		  	if(kq > 0)
-		  	{
-		  		alert("Tạo giáo viên thành công  !");
-		  		window.location.href='<?php echo $pageTeacher; ?>';
-		  	}
-		  	else
-		  	{
-		  		alert("Tạo giáo viên không thành công !");
-		  	}
-	  	});
+$(document).ready(	
+	function(){
+		
 	}
+);
+var frm = $('#formTeacherAdd');
+frm.submit(function (e) {
+e.preventDefault();
+	var teacher_id = $('#teacherID').val(),
+		teacher_name = $('#teacherName').val(),
+		teacher_old = $('#teacherOld').val(),
+		teacher_sex = $('#teacherSex').val(),
+		teacher_address = $('#teacherAddress').val()
+	var data = 
+	{
+		teacher_id:teacher_id,
+		teacher_name:teacher_name, 
+		teacher_old:teacher_old, 
+		teacher_sex:teacher_sex, 
+		teacher_address: teacher_address
+	};
+$.ajax({
+  type: "POST",
+  url: '<?php echo $ajaxCreateTeacher; ?>', 
+  data: data,
+  dataType: 'json',
+	}).done(function(data) {
+		var kq = data.ketqua;
+	  	if(kq > 0)
+	  	{
+	  		alert("Tạo giáo viên thành công  !");
+	  		window.location.href='<?php echo $pageTeacher; ?>';
+	  	}
+	  	else
+	  	{
+	  		alert("Tạo giáo viên không thành công !");
+	  	}
+	});
+});
 </script>

@@ -25,6 +25,7 @@
 			    <th>ID</th>
 			    <th>Tên học viên</th> 
 			    <th>Tuổi</th>
+			    <th>CMND</th>
 			    <th>Giới tính</th>
 			    <th>Địa chỉ</th>
 			    <th>Email</th>
@@ -38,6 +39,7 @@
 					<td id="student_id'.$value['student_id'].'" class="student_id">'.$value['student_id'].'</td>
 					<td id="student_name'.$value['student_id'].'" class="student_name">'.$value['student_name'].'</td>
 					<td id="student_old'.$value['student_id'].'" class="student_old">'.$value['student_old'].'</td>
+					<td id="student_identitycard'.$value['student_id'].'" class="student_identitycard">'.$value['student_identitycard'].'</td>
 					<td id="student_sex'.$value['student_id'].'" class="student_sex">'.$value['student_sex'].'</td>
 					<td id="student_address'.$value['student_id'].'" class="student_address">'.$value['student_address'].'</td>
 					<td id="student_email'.$value['student_id'].'" class="student_email">'.$value['student_email'].'</td>

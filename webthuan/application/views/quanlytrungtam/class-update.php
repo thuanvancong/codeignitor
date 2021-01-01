@@ -12,14 +12,12 @@
 			<h1 class="page-header">Lớp học</h1>
 		</div>
 	</div>
-	<div class="row">
-		<div class="class" id="classItem">
-			<div class="row">
-				<div class="col-md-2">
+	<div class="panel-body">
+		<div class="col-md-6">
+			<form id="formClassUpdate" action="ajaxUpdateClassItem()" method="POST">
+				<div class="form-group">
 					<label for="classID">CHỌN ID CẦN SỬA</label>
-				</div>
-				<div class="col-md-10">
-					<select id="classID">
+					<select id="classID" class="form-control">
 						<?php 
 							foreach ($DBClass as $key => $value) {
 								echo 
@@ -28,75 +26,51 @@
 						?>
 					</select>
 				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-2">
+				<div class="form-group">
 					<label for="className">Tên class</label>
+					<input type="text" id="className" class="form-control" required>
 				</div>
-				<div class="col-md-10">
-					<input type="text" id="className"><br>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-2">
+				<div class="form-group">
 					<label for="classDescription">Mô tả trang</label>
+					<input type="text" id="classDescription" class="form-control" required>
 				</div>
-				<div class="col-md-10">
-					<input type="text" id="classDescription"><br>
+				<div class="form-group">
+					<label for="classOpen">Thời gian mở lớp</label>
+					<input type="date" id="classOpen" name="classOpen" class="form-control" required>
 				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-2">
-					<label for="classOpen">Thời gian mở lớp</label><br>
+				<div class="form-group">
+					<label for="classFinish">Thời gian kết thúc</label>
+					<input type="date" id="classFinish" name="classFinish" class="form-control" required>
 				</div>
-				<div class="col-md-10">
-					<input type="date" id="classOpen" name="classOpen">
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-2">
-					<label for="classFinish">Thời gian kết thúc</label><br>
-				</div>
-				<div class="col-md-10">
-					<input type="date" id="classFinish" name="classFinish">
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-2">
-					<label for="level">Cấp độ</label><br>
-				</div>
-				<div class="col-md-10">
-					<select name="level" id="level">
-					<?php
-					foreach ($DBLevel as $key => $value) {
-						echo '<option value="'.$value['level_id'].'" selected="selected">'.$value['level_number'].'</option>';
-					}
-					?>
+				<div class="form-group">
+					<label for="level">Cấp độ</label>
+					<select name="level" id="level" class="form-control">
+						<?php
+							foreach ($DBLevel as $key => $value) {
+								echo '<option value="'.$value['level_id'].'" selected="selected">'.$value['level_number'].'</option>';
+							}
+						?>
 					</select>
 				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-2">
-					<label for="courseID">Khóa học</label><br>
-				</div>
-				<div class="col-md-10">
-					<select name="courseID" id="courseID">
-					<?php
-					foreach ($DBCourse as $key => $value) {
-						echo '<option value="'.$value['course_id'].'" selected="selected">'.$value['course_name'].'</option>';
-					}
-					?>
+				<div class="form-group">
+					<label>Khóa học</label>
+					<select name="courseID" id="courseID" class="form-control">
+						<?php
+							foreach ($DBCourse as $key => $value) {
+								echo '<option value="'.$value['course_id'].'" selected="selected">'.$value['course_name'].'</option>';
+							}
+						?>
 					</select>
 				</div>
-			</div>
-			<button onclick="ajaxUpdateClassItem()">SỬA THÔNG TIN</button>
+				<button class ="btn btn-primary btn-md">SAVE</a></button>
+			</form>
 		</div>
 	</div>
 </div>
 <script type="text/javascript">
 $(document).ready(	
 	function(){
-		$('#classItem').find('#classID').on('change', function(evt) {
+		$('#formClassUpdate').find('#classID').on('change', function(evt) {
 	      var $target = $(evt.currentTarget);
 	      var class_id = $('#classID').find('option:selected').val();
 	      loadItemClass(class_id);
@@ -124,9 +98,9 @@ function loadItemClass(class_id)
 	  	}
 	});
 }
-
-function ajaxUpdateClassItem()
-{
+var frm = $('#formClassUpdate');
+frm.submit(function (e) {
+e.preventDefault();
 	var class_id = $('#classID').find('option:selected').val(),
 		class_name =$('#className').val(),
 		class_description =$('#classDescription').val(),
@@ -143,15 +117,13 @@ function ajaxUpdateClassItem()
 			level_id:level_id,
 			course_id:course_id
 		};
-		console.log(data);
-	$.ajax({
-      type: "POST",
-      url: '<?php echo $ajaxUpdateClassItem; ?>', 
-      data: data,
-      dataType: 'json',
+$.ajax({
+  type: "POST",
+  url: '<?php echo $ajaxUpdateClassItem; ?>', 
+  data: data,
+  dataType: 'json',
 	}).done(function(data) {
 		var kq = data.kq;
-		console.log(kq);
 	  	if(kq > 0)
 	  	{
 	  		alert("Sửa thông tin thành công  !");
@@ -162,5 +134,5 @@ function ajaxUpdateClassItem()
 	  		alert("Sửa không thành công ");
 	  	}
 	});
-}
+});
 </script>

@@ -12,14 +12,12 @@
 			<h1 class="page-header">Học viên</h1>
 		</div>
 	</div>
-	<div class="row">
-		<div class="" id="teacherItem">
-			<div class="row">
-				<div class="col-md-2">
+	<div class="panel-body">
+		<div class="col-md-6">
+			<form id="formTeacherUpdate" action="ajaxUpdateTeacherItem()" method="POST">
+				<div class="form-group">
 					<label for="teacherID">CHỌN ID CẦN SỬA</label>
-				</div>
-				<div class="col-md-10">
-					<select id="teacherID">
+					<select id="teacherID" class="form-control">
 						<?php 
 							foreach ($DBTeacher as $key => $value) {
 								echo 
@@ -28,40 +26,24 @@
 						?>
 					</select>
 				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-2">
-					<label for="teacherName">Tên học viên</label>
+				<div class="form-group">
+					<label for="teacherName">Tên Giáo Viên</label>
+					<input type="text" id="teacherName" class="form-control" required>
 				</div>
-				<div class="col-md-10">
-					<input type="text" id="teacherName"><br>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-2">
+				<div class="form-group">
 					<label for="teacherOld">Tuổi</label>
+					<input type="number" id="teacherOld" class="form-control" required>
 				</div>
-				<div class="col-md-10">
-					<input type="number" id="teacherOld"><br>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-2">
+				<div class="form-group">
 					<label for="teacherSex">Giới tính</label><br>
+					<input type="text" id="teacherSex" class="form-control" required>
 				</div>
-				<div class="col-md-10">
-					<input type="text" id="teacherSex" name="teacherSex">
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-2">
+				<div class="form-group">
 					<label for="teacherAddress">Địa chỉ</label><br>
+					<input type="text" id="teacherAddress" class="form-control" required>
 				</div>
-				<div class="col-md-10">
-					<input type="text" id="teacherAddress" name="teacherAddress">
-				</div>
-			</div>
-			<button onclick="ajaxUpdateTeacherItem()">SỬA THÔNG TIN</button>
+				<button class ="btn btn-primary btn-md">SAVE</a></button>
+			</form>
 		</div>
 	</div>
 </div>
@@ -69,7 +51,7 @@
 <script type="text/javascript">
 $(document).ready(	
 	function(){
-		$('#teacherItem').find('#teacherID').on('change', function(evt) {
+		$('#formTeacherUpdate').find('#teacherID').on('change', function(evt) {
 	      var $target = $(evt.currentTarget);
 	      var teacher_id = $('#teacherID').find('option:selected').val();
 	      loadItemTeacher(teacher_id);
@@ -95,8 +77,10 @@ function loadItemTeacher(teacher_id)
 	  	}
 	});
 }
-function ajaxUpdateTeacherItem()
-{
+
+var frm = $('#formTeacherUpdate');
+frm.submit(function (e) {
+e.preventDefault();
 	var teacher_id = $('#teacherID').val(),
 		teacher_name = $('#teacherName').val(),
 		teacher_old = $('#teacherOld').val(),
@@ -110,14 +94,13 @@ function ajaxUpdateTeacherItem()
 		teacher_sex:teacher_sex, 
 		teacher_address: teacher_address
 	};
-	$.ajax({
-      type: "POST",
-      url: '<?php echo $ajaxUpdateTeacherItem; ?>', 
-      data: data,
-      dataType: 'json',
+$.ajax({
+  type: "POST",
+  url: '<?php echo $ajaxUpdateTeacherItem; ?>', 
+  data: data,
+  dataType: 'json',
 	}).done(function(data) {
 		var kq = data.kq;
-		console.log(kq);
 	  	if(kq > 0)
 	  	{
 	  		alert("Sửa thông tin thành công  !");
@@ -128,5 +111,6 @@ function ajaxUpdateTeacherItem()
 	  		alert("Sửa không thành công ");
 	  	}
 	});
-}
+});
+
 </script>
