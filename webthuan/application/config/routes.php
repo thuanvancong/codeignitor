@@ -49,7 +49,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
-$route['default_controller'] = 'Login_Controller/pageLogin';
+$route['default_controller'] = 'Login/index';
 $route['404_override'] = 'Custom404';
 $route['translate_uri_dashes'] = FALSE;
 $route['accessdenied'] = 'Accessdenied_Controller';
@@ -107,4 +107,4 @@ $route['role/delete'] = 'Role/delete';
 $route['role'] = 'Role/index';
 
 /*---- ĐỊNH DANH ROUTER LOGIN ---*/
-$route['login'] = 'Login_Controller/pageLogin';
+$route['login'] = 'Login/index';
