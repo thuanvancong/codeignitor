@@ -131,5 +131,37 @@ class quanlytrungtam_model extends CI_Model
 									on TB_USERROLE.role_id = roles.role_id ");
 		return $query->result_array();
 	}
+	function getDBClassByClassName($class_name)
+	{
+		$this->load->database();
+		$query = $this->db->query("select * from web_codeigniter.class where class_name like N'%$class_name%'");
+		return $query->result_array();
+	}
+
+	function getDBStudentByStudentName($student_name)
+	{
+		$this->load->database();
+		$query = $this->db->query("select * from web_codeigniter.student where student_name like N'%$student_name%'");
+		return $query->result_array();
+	}
+	function getDBTeacherByTeacherName($teacher_name)
+	{
+		$this->load->database();
+		$query = $this->db->query("select * from web_codeigniter.teacher where teacher_name like N'%$teacher_name%'");
+		return $query->result_array();
+	}
+	function getDBShiftByShiftName($shift_name)
+	{
+		$this->load->database();
+		$query = $this->db->query("select * from web_codeigniter.shift where shift_name like N'%$shift_name%'");
+		return $query->result_array();
+	}
+
+	function getIDByTable($id,$condition,$value,$table)
+	{
+		$this->load->database();
+		$query = $this->db->query("select $id from $table where $condition like N'%$value%'");
+		return $query->result_array();
+	}
 }
 ?>
