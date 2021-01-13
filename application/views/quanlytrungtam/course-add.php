@@ -27,6 +27,14 @@
 					<label for="coursePrice">Giá khóa học</label>
 					<input type="number" id="coursePrice" class="form-control" required>
 				</div>
+				<div class="form-group">
+					<label for="courseStart">Thời gian bắt đầu</label>
+					<input type="datetime" id="courseStart" class="form-control" required>
+				</div>
+				<div class="form-group">
+					<label for="courseEnd">Thời gian kết thúc</label>
+					<input type="datetime" id="courseEnd" class="form-control" required>
+				</div>
 				<button class ="btn btn-primary btn-md">SAVE</a></button>
 			</form>
 		</div>
