@@ -53,7 +53,7 @@
 				</div>
 				<div class="form-group">
 					<label>Phần trăm tiền</label>
-					<input type='number' class="form-control" placeholder="100% là đã trả đủ" id="precent_debt">
+					<input type='number' class="form-control" placeholder="100% là đã trả đủ" id="precent_debt" min="1" max="100">
 				</div>
 				<div class="form-group">
 					<label>Chọn ca học</label>

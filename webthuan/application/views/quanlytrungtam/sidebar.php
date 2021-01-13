@@ -51,6 +51,7 @@
 					</a></li>
 				</ul>
 			</li>
+			<li><a href="http://localhost:8888/codeigniter/webthuan/index.php/Register/index"><em class="fa fa-drivers-license">&nbsp;</em> Register</a></li>
 			<li><a href="<?php echo base_url()."assets/"; ?>widgets.html"><em class="fa fa-calendar">&nbsp;</em> Widgets</a></li>
 			<li><a href="<?php echo base_url()."assets/"; ?>charts.html"><em class="fa fa-bar-chart">&nbsp;</em> Charts</a></li>
 			<li><a href="<?php echo base_url()."assets/"; ?>elements.html"><em class="fa fa-toggle-off">&nbsp;</em> UI Elements</a></li>
