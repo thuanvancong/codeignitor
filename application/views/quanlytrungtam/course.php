@@ -24,6 +24,8 @@
 			    <th>ID</th>
 			    <th>Tên khóa học</th> 
 			    <th>Tiền khóa học</th>
+			    <th>Thời gian bắt đầu</th>
+			    <th>Thời gian kết thúc</th>
 			  </tr>';
 			foreach ($DBCourse as $key => $value) {
 				echo 
@@ -31,7 +33,9 @@
 				<tr class="course-item" id="item'.$value['course_id'].'">
 					<td id="course_id'.$value['course_id'].'" class="course_id">'.$value['course_id'].'</td>
 					<td id="course_name'.$value['course_id'].'" class="course_name">'.$value['course_name'].'</td>
-					<td id="course_price'.$value['course_id'].'" class="course_price">'.$value['course_price'].'</td>';
+					<td id="course_price'.$value['course_id'].'" class="course_price">'.$value['course_price'].'</td>
+					<td id="course_start'.$value['course_id'].'" class="course_start">'.$value['course_start'].'</td>
+					<td id="course_end'.$value['course_id'].'" class="course_end">'.$value['course_end'].'</td>';
 			}
 			echo'</tr>';
 			echo'</table>';

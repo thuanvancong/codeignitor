@@ -33,6 +33,14 @@
 					<label for="coursePrice">Giá khóa học</label>
 					<input type="number" id="coursePrice" class="form-control" required>
 				</div>
+				<div class="form-group">
+					<label for="courseStart">Thời gian bắt đầu</label>
+					<input type="date" id="courseStart" class="form-control" required>
+				</div>
+				<div class="form-group">
+					<label for="courseEnd">Thời gian kết thúc</label>
+					<input type="date" id="courseEnd" class="form-control" required>
+				</div>
 				<button class ="btn btn-primary btn-md">SAVE</a></button>
 			</form>
 		</div>
@@ -63,6 +71,8 @@ function loadItemCourse(id)
 	  	{
 	  		$('#courseName').val(ketqua[i].course_name);
 	  		$('#coursePrice').val(ketqua[i].course_price);
+	  		$('#courseStart').val(ketqua[i].course_start);
+	  		$('#courseEnd').val(ketqua[i].course_end);
 	  	}
 	});
 }
@@ -75,6 +85,8 @@ frm.submit(function (e) {
 		course_id : course_id,
 		course_name : $('#courseName').val(),
 		course_price : $('#coursePrice').val(),
+		course_end : $('#courseEnd').val(),
+		course_start : $('#courseStart').val(),
 	}
     $.ajax({
       type: "POST",

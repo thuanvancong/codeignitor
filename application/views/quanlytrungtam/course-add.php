@@ -29,11 +29,11 @@
 				</div>
 				<div class="form-group">
 					<label for="courseStart">Thời gian bắt đầu</label>
-					<input type="datetime" id="courseStart" class="form-control" required>
+					<input type="date" id="courseStart" class="form-control" required>
 				</div>
 				<div class="form-group">
 					<label for="courseEnd">Thời gian kết thúc</label>
-					<input type="datetime" id="courseEnd" class="form-control" required>
+					<input type="date" id="courseEnd" class="form-control" required>
 				</div>
 				<button class ="btn btn-primary btn-md">SAVE</a></button>
 			</form>
@@ -45,9 +45,12 @@ var frm = $('#formCourseAdd');
 frm.submit(function (e) {
     e.preventDefault();
     var courseID = $('#courseID').val();
-		var courseName = $('#courseName').val();
-		var coursePrice = $('#coursePrice').val();
-		data={course_name: courseName, course_price: coursePrice};
+		var courseName = $('#courseName').val(),
+			coursePrice = $('#coursePrice').val(),
+			courseStart = $('#courseStart').val(),
+			courseEnd = $('#courseEnd').val(),
+
+		data={course_name: courseName, course_price: coursePrice, course_start:courseStart, course_end:courseEnd};
     $.ajax({
       type: "POST",
       url: '<?php echo $ajaxCreateCourse; ?>', 

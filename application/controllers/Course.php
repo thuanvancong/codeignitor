@@ -62,7 +62,9 @@ class Course extends Pageparent_Controller
 		);
 		$dataInsert = array(
 			'course_name' => $_POST['course_name'],
-			'course_price' => $_POST['course_price']
+			'course_price' => $_POST['course_price'],
+			'course_start' => $_POST['course_start'],
+			'course_end' => $_POST['course_end']
 		);
 		$table = 'course';
 		$this->load->model("quanlytrungtam_model");
@@ -91,7 +93,9 @@ class Course extends Pageparent_Controller
 	{
 		$dataUpdate = array(
 			'course_name' => $_POST['course_name'],
-			'course_price'=> $_POST['course_price']
+			'course_price'=> $_POST['course_price'],
+			'course_start' => $_POST['course_start'],
+			'course_end' => $_POST['course_end']
 		);
 		$id = $_POST['course_id'];
 		$table = 'course';
