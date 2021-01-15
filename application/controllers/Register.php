@@ -72,20 +72,21 @@ class Register extends Pageparent_Controller
 
     function ajaxRegister()
     {
+        $student_id = (int)$_POST['student_id'];
     	$student_name = $_POST['student_name'];
     	$class_name = $_POST['class_name'];
     	$teacher_name = $_POST['teacher_name'];
     	$shift_name = $_POST['shift_name'];
     	$precent_debt = $_POST['precent_debt'];
     	$this->load->model("quanlytrungtam_model");
-    	$idStudent = $this->quanlytrungtam_model->getIDByTable('student_id','student_name',$student_name,'Student');
+    	//$idStudent = $this->quanlytrungtam_model->getIDByTable('student_id','student_name',$student_name,'Student');
     	$idClass = $this->quanlytrungtam_model->getIDByTable('class_id','class_name',$class_name,'Class');
     	$idTeacher = $this->quanlytrungtam_model->getIDByTable('teacher_id','teacher_name',$teacher_name,'Teacher');
     	$idShift = $this->quanlytrungtam_model->getIDByTable('shift_id','shift_name',$shift_name,'Shift');
-    	$student_id = $idStudent[0]['student_id'];
+    	//$student_id = $idStudent[0]['student_id'];
     	$class_id = $idClass[0]['class_id'];
     	$teacher_id = $idTeacher[0]['teacher_id'];
-    	$shift_id = $idShift[0]['shift_id']; 
+    	$shift_id = $idShift[0]['shift_id'];
     	$dataInsert = array(
     		'precent_debt' => $precent_debt,
     		'class_id' => $class_id,

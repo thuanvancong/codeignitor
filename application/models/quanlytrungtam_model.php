@@ -98,6 +98,31 @@ class quanlytrungtam_model extends CI_Model
 		return $query->result_array();
 	}
 
+	function getStudentNameByID($student_id)
+	{
+		$this->load->database();
+		$query = $this->db->query("select student_name from student where student_id=$student_id");
+		return $query->result_array();
+	}
+	function getClassNameByID($class_id)
+	{
+		$this->load->database();
+		$query = $this->db->query("select class_name from class where class_id=$class_id");
+		return $query->result_array();
+	}
+	function getTeacherNameByID($teacher_id)
+	{
+		$this->load->database();
+		$query = $this->db->query("select teacher_name from teacher where teacher_id=$teacher_id");
+		return $query->result_array();
+	}
+	function getShiftTimeByID($shift_id)
+	{
+		$this->load->database();
+		$query = $this->db->query("select time_in,time_out from shift where shift_id=$shift_id");
+		return $query->result_array();
+	}
+
 	function getUser_IDByIdentifyCard($student_identitycard)
 	{
 		$this->load->database();
@@ -160,7 +185,14 @@ class quanlytrungtam_model extends CI_Model
 	function getIDByTable($id,$condition,$value,$table)
 	{
 		$this->load->database();
-		$query = $this->db->query("select $id from $table where $condition like N'%$value%'");
+		$query = $this->db->query("select $id from $table where $condition like N'$value%'");
+		return $query->result_array();
+	}
+
+	function getItemScheduleByIndentify($student_identitycard)
+	{
+		$this->load->database();
+		$query = $this->db->query("select * from ( select student_id from student where student_identitycard = $student_identitycard) as STUDENT inner join class_by_student on STUDENT.student_id = class_by_student.student_id ");
 		return $query->result_array();
 	}
 }

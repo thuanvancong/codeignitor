@@ -33,7 +33,7 @@
 					<?php 
 						foreach ($dataStudent as $key => $value) {
 							$studentName = $value['student_name'];
-							echo '<option id="student_name'.$value['class_id'].'">'.$studentName.'</option>';
+							echo '<option id="student_name'.$value['student_id'].'" student_id="'.$value['student_id'].'" >'.$studentName.'</option>';
 						}
 					?>
 					</select>
@@ -53,7 +53,7 @@
 				</div>
 				<div class="form-group">
 					<label>Phần trăm tiền</label>
-					<input type='number' class="form-control" placeholder="100% là đã trả đủ" id="precent_debt" min="1" max="100">
+					<input type='number' class="form-control" placeholder="100% là đã trả đủ" id="precent_debt" min="50" max="100" require>
 				</div>
 				<div class="form-group">
 					<label>Chọn ca học</label>
@@ -359,18 +359,21 @@
 	var frm = $('#formRegister');
 	frm.submit(function (e) {
 	e.preventDefault();
-		var student_name = $('#item_student_name').find('option:selected').val(),
+		var student_id = $('#item_student_name').find('option:selected').attr("student_id"),
+			student_name = $('#item_student_name').find('option:selected').val(),
 			class_name = $('#item_class_name').find('option:selected').val(),
 			teacher_name = $('#item_teacher_name').find('option:selected').val(),
 			shift_name = $('#item_shift_name').find('option:selected').val(),
 			precent_debt = $('#precent_debt').val();
-		var data = {
-			student_name:student_name,
-			class_name:class_name, 
-			teacher_name:teacher_name, 
-			shift_name:shift_name, 
-			precent_debt: precent_debt, 
-		};
+			var data = {
+				student_id:student_id,
+				student_name:student_name,
+				class_name:class_name, 
+				teacher_name:teacher_name, 
+				shift_name:shift_name, 
+				precent_debt: precent_debt, 
+			};
+		
 	$.ajax({
 	  type: "POST",
 	  url: '<?php echo $ajaxRegister; ?>', 
