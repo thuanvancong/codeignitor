@@ -195,5 +195,12 @@ class quanlytrungtam_model extends CI_Model
 		$query = $this->db->query("select * from ( select student_id from student where student_identitycard = $student_identitycard) as STUDENT inner join class_by_student on STUDENT.student_id = class_by_student.student_id ");
 		return $query->result_array();
 	}
+
+	function getItemScheduleByClass($class_name)
+	{
+		$this->load->database();
+		$query = $this->db->query("select * from ( select class_id,class_name from class where class_name like N'%$class_name%') as CLASS inner join class_by_student on CLASS.class_id = class_by_student.class_id");
+		return $query->result_array();
+	}
 }
 ?>

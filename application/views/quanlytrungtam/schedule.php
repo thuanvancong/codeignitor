@@ -28,7 +28,7 @@
 					<div class="input-group hidden" id="schedule-class">
 						<input id="input-ID-class" type="text" class="form-control input-md" placeholder="Nhập Lớp">
 						<span class="input-group-btn">
-							<button class="btn btn-primary btn-md" id="btn-chat" onclick="AjaxScheduleClass()">GỬI</button>
+							<button class="btn btn-primary btn-md" id="btn-chat" onclick="ajaxScheduleClass()">GỬI</button>
 						</span>
 					</div>
 				</div>
@@ -100,8 +100,24 @@
 		});
 	}
 
-	function AjaxScheduleClass()
+	function ajaxScheduleClass()
 	{
 		var schedule_class = $('#input-ID-class').val();
+		$.ajax({
+			method: "POST",
+			url: '<?php echo $ajaxScheduleClass; ?>', 
+			dataType:'json',
+			data:{schedule_class:schedule_class}
+		}).done(function(data){
+			var ketqua = data.ketqua,
+				htmlString = '';
+			$('#table-schedule-student').removeClass('hidden');
+			var i;
+			for(i = 0;i < ketqua.length;i++)
+			{
+				htmlString = '<tr><td id="schedule_class_id"'+ketqua[i].student_id+'>'+ketqua[i].class_name+'</td><td id="schedule_student_id"'+ketqua[i].student_id+'>'+ketqua[i].student_name+'</td><td id="schedule_student_id"'+ketqua[i].student_id+'>'+ketqua[i].teacher_name+'</td><td id="schedule_student_id"'+ketqua[i].student_id+'>'+ketqua[i].time_in+'</td><td id="schedule_student_id"'+ketqua[i].student_id+'>'+ketqua[i].time_out+'</td></tr>';
+				$('#table-schedule-student').find('tbody').append(htmlString);
+			}
+		});
 	}
 </script>
