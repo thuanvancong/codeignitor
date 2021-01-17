@@ -46,9 +46,48 @@
 							?> 
 						</tbody>
 					</table>
+					<button type="button" class="btn btn-md btn-primary" data-toggle="modal" data-target="#PopupPaymentDebt" onclick="">THANH TOÁN TIỀN NỢ</button>
 				</div>
 			</div>
 		</div>
+	</div>
+	<!-- POPUP PAYMENT DEBT-->
+	<div class="modal fade" id="PopupPaymentDebt" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="exampleModalLabel">THÔNG TIN</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        <form id="formPopupPayment">
+				<div class="form-group">
+					<label for="studentIdentitycard">Nhập CMND</label>
+					<input type="text" id="studentIdentitycard" class="form-control"  ClassStudentID=0 required>
+				</div>
+				<div class="form-group">
+					<label for="className">Nhập Tên Lớp</label>
+					<input type="text" id="className" class="form-control" required>
+					<button type="button" class="btn btn-link fa fa-arrow-right" onclick="detailItemPaymenyt()"> Lấy thông tin</button>
+				</div>
+				<div class="form-group">
+					<label for="precentDebt">Phần Trăm Đã Đóng</label>
+					<input type="number" id="precentDebt" class="form-control">
+				</div>
+				<div class="form-group">
+					<label for="precentPayment">Số Tiền Còn Lại</label>
+					<input type="number" id="precentPayment" class="form-control">
+				</div>
+			</form>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+	        <button type="button" class="btn btn-primary" onclick="ajaxUpdatePaymentDebt()" >Save changes</button>
+	      </div>
+	    </div>
+	  </div>
 	</div>
 </div>
 <script type="text/javascript">
@@ -60,4 +99,71 @@ $(document).ready(function(){
     });
   });
 });
+
+// lấy thông tin 
+function detailItemPaymenyt()
+{
+	var studentIdentitycard = $('#studentIdentitycard').val(),
+		className = $('#className').val();
+	var data = {
+		studentIdentitycard: studentIdentitycard,
+		className : className
+	};
+	$.ajax({
+	  type: "POST",
+	  url: '<?php echo $ajaxDetailPayment; ?>', 
+	  data: data,
+	  dataType: 'json',
+	}).done(function(data) {
+		var ketqua = data.ketqua;
+		if(ketqua.length > 0)
+		{ 
+			for(var i = 0; i < ketqua.length; i++)
+			{
+				var precent_pay = 100-ketqua[i].precent_debt;
+				$('#precentDebt').val(ketqua[i].precent_debt);
+				$('#precentPayment').val(precent_pay);
+				$('#studentIdentitycard').attr("ClassStudentID",ketqua[i].class_student_id);
+				if(ketqua[i].precent_debt == 100)
+				{
+					alert("Đã Thanh Toán Đủ");
+				}
+			}	
+		}
+		else
+		{
+			alert("Sai thông tin vui lòng kiểm tra lại");
+		}
+		
+	});
+}
+
+function ajaxUpdatePaymentDebt()
+{
+	var precentPayment = $('#precentPayment').val(),
+		precentDebt = $('#precentDebt').val(),
+		class_student_id = $('#studentIdentitycard').attr("ClassStudentID"),
+		data = {
+			precentPayment:precentPayment,
+			precentDebt:precentDebt,
+			class_student_id:class_student_id
+		};
+	$.ajax({
+	  type: "POST",
+	  url: '<?php echo $ajaxPayment; ?>', 
+	  data: data,
+	  dataType: 'json',
+	}).done(function(data) {
+		var ketqua = data.ketqua;
+		if(ketqua == 1)
+		{
+		  alert("Đóng tiền thành công!");
+		  window.location.href='<?php echo $pageMoneyStudent; ?>';
+		}
+		else
+		{
+			alert("Đóng tiền không thành công!");
+		}
+	});
+}
 </script>

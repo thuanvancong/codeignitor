@@ -1201,3 +1201,7 @@ table#table-config
   padding: 10px;
   background-color: white;
 }
+
+#table-money-student {
+  margin-left: 0px;
+}

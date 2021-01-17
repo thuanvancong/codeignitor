@@ -228,5 +228,34 @@ class quanlytrungtam_model extends CI_Model
 									on EXTEND_STUDENT.class_id = CLASS.class_id");
 		return $query->result_array();
 	}
+
+	function getDB_STUDENT_CLASS_EXTENTD_BY_INDENTITYCARD($student_identitycard,$class_name)
+	{
+		$this->load->database();
+		$query = $this->db->query("select 
+										class.class_id,
+										class.class_name,
+										class.course_id,
+										EXTEND_STUDENT.student_name,
+										EXTEND_STUDENT.student_identitycard,
+										EXTEND_STUDENT.precent_debt,
+										EXTEND_STUDENT.class_student_id
+									from 
+										(select 
+											class_student_id,
+											precent_debt,
+											shift_id,
+											class_id,
+											student_name,
+											student_identitycard 
+											from class_by_student 
+											left join student 
+											on class_by_student.student_id = student.student_id 
+									        where student_identitycard = $student_identitycard) AS EXTEND_STUDENT
+									left join class 
+									on EXTEND_STUDENT.class_id = CLASS.class_id
+									where class_name like N'%$class_name%'");
+		return $query->result_array();
+	}
 }
 ?>
