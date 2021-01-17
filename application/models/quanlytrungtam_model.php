@@ -202,5 +202,31 @@ class quanlytrungtam_model extends CI_Model
 		$query = $this->db->query("select * from ( select class_id,class_name from class where class_name like N'%$class_name%') as CLASS inner join class_by_student on CLASS.class_id = class_by_student.class_id");
 		return $query->result_array();
 	}
+
+	function getDBJoin_STUDENT_CLASS_EXTENTD()
+	{
+		$this->load->database();
+		$query = $this->db->query("select 
+										class.class_id,
+										class.class_name,
+										class.course_id,
+										EXTEND_STUDENT.student_name,
+										EXTEND_STUDENT.student_identitycard,
+										EXTEND_STUDENT.precent_debt
+									from 
+										(select 
+											class_student_id,
+											precent_debt,
+									        shift_id,
+									        class_id,
+									        student_name,
+									        student_identitycard 
+									        from class_by_student 
+									        left join student 
+									        on class_by_student.student_id = student.student_id) AS EXTEND_STUDENT 
+									left join class 
+									on EXTEND_STUDENT.class_id = CLASS.class_id");
+		return $query->result_array();
+	}
 }
 ?>
