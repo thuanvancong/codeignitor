@@ -13,7 +13,7 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-md-8">
+		<div class="col-md-12">
 			<div class="panel panel-warning">
 				<div class="panel-heading">QUẢN LÝ CÔNG NỢ HỌC SINH</div>
 				<div class="panel-body">
