@@ -156,6 +156,12 @@ class quanlytrungtam_model extends CI_Model
 									on TB_USERROLE.role_id = roles.role_id ");
 		return $query->result_array();
 	}
+	function getDBClassByCourseName($course_name)
+	{
+		$this->load->database();
+		$query = $this->db->query("select * from web_codeigniter.course where course_name like N'%$course_name%'");
+		return $query->result_array();
+	}
 	function getDBClassByClassName($class_name)
 	{
 		$this->load->database();
@@ -255,6 +261,89 @@ class quanlytrungtam_model extends CI_Model
 									left join class 
 									on EXTEND_STUDENT.class_id = CLASS.class_id
 									where class_name like N'%$class_name%'");
+		return $query->result_array();
+	}
+
+	function getDB_Extend_Class_By_Student_Shift($student_id)
+	{
+		$this->load->database();
+		$query = $this->db->query("select CLASS.class_id,
+											CLASS.class_open,
+									        CLASS.class_finish,
+									        EXTEND.time_in,
+									        EXTEND.time_out,
+									        EXTEND.shift_id
+									from 
+										(select 
+											time_in,
+											time_out,
+											class_id,
+											class_by_student.shift_id
+										from class_by_student 
+										left join shift 
+										on class_by_student.shift_id=shift.shift_id 
+										where student_id=$student_id) AS EXTEND 
+										inner join CLASS on EXTEND.class_id = CLASS.class_id;");
+		return $query->result_array();
+	}
+	function getDB_Extend_Class_By_Student_Class($student_id,$class_name)
+	{
+		$this->load->database();
+		$query = $this->db->query("select * 
+									from class_by_student 
+									left join class 
+									on class_by_student.class_id = class.class_id 
+									where class_name like N'%$class_name%' and class_by_student.student_id =$student_id");
+		return $query->result_array();
+	}
+
+	function getDB_Extend_Check_Register($course_id,$level_id,$student_id)
+	{
+		$this->load->database();
+		$query = $this->db->query("select 
+									* 
+									FROM course 
+									left join class_by_student 
+									on course.course_id = class_by_student.course_id 
+									where class_by_student.course_id = $course_id 
+									and class_by_student.level_id=$level_id
+									and student_id = $student_id");
+		return $query->result_array();
+	}
+
+	function CountRow_Extend_Register($course_id,$level_id)
+	{
+		$this->load->database();
+		$query = $this->db->query("select 
+									count(class_student_id) as count_row 
+									from class_by_student 
+									where course_id = $course_id and level_id = $level_id");
+		return $query->result_array();
+	}
+
+	function CountRow_Extend_Class($course_id,$level_id)
+	{
+		$this->load->database();
+		$query = $this->db->query("select count(class_id) as count_class from class where level_id = $level_id and course_id = $course_id");
+		return $query->result_array();
+	}
+
+	function getDB_Class_By_Level_Course($course_id,$level_id)
+	{
+		$this->load->database();
+		$query = $this->db->query("select * 
+									from class 
+									where level_id = $level_id and course_id = $course_id
+									order by date_update desc");
+		return $query->result_array();
+	}
+
+	function GetDB_Register_By_ID_Student_Shift($student_id,$shift_id)
+	{
+		$this->load->database();
+		$query = $this->db->query("select * 
+									from class_by_student 
+									where student_id = $student_id and shift_id = $shift_id ");
 		return $query->result_array();
 	}
 }

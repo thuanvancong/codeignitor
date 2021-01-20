@@ -16,6 +16,29 @@
 		<div class="col-md-6">
 			<form id="formRegister" action="ajaxRegister" method="POST">
 				<div class="form-group">
+					<label>Danh sách Khóa Học</label>
+					<select class="form-control" id="item_course_name">
+					<?php 
+						foreach ($dataCourse as $key => $value) {
+							$courseName = $value['course_name'];
+							echo '<option id="course_name'.$value['course_id'].'" courseID ="'.$value['course_id'].'">'.$courseName.'</option>';
+						}
+					?>
+					</select>
+					<button type="button" class="btn btn-link" data-toggle="modal" data-target="#PopupCourseModal" onclick="detailItemCourse()">Xem Chi Tiết</button>
+				</div>
+				<div class="form-group">
+					<label>Cấp độ</label>
+					<select class="form-control" id="item_level_name">
+					<?php 
+						foreach ($dataLevel as $key => $value) {
+							$levelID = $value['level_id'];
+							echo '<option id="level_id'.$value['level_id'].'">'.$levelID.'</option>';
+						}
+					?>
+					</select>
+				</div>
+				<!-- <div class="form-group">
 					<label>Danh sách lớp học</label>
 					<select class="form-control" id="item_class_name">
 					<?php 
@@ -26,7 +49,7 @@
 					?>
 					</select>
 					<button type="button" class="btn btn-link" data-toggle="modal" data-target="#PopupClassModal" onclick="detailItem()">Xem Chi Tiết</button>
-				</div>
+				</div> -->
 				<div class="form-group">
 					<label>Danh sách sinh viên</label>
 					<select class="form-control" id="item_student_name">
@@ -61,7 +84,7 @@
 					<?php 
 						foreach ($dataShift as $key => $value) {
 							$shiftName = $value['shift_name'];
-							echo '<option id="shift_name'.$value['shift_id'].'">'.$shiftName.'</option>';
+							echo '<option id="shift_name'.$value['shift_id'].'" shiftID = "'.$value['shift_id'].'">'.$shiftName.'</option>';
 						}
 					?>
 					</select>
@@ -73,9 +96,49 @@
 			<div class="alert bg-teal hidden" role="alert" id="fail"><em class="fa fa-lg fa-warning">&nbsp;</em> Đăng ký không thành công ! <em class="fa fa-lg fa-close"></em></a></div>
 		</div>
 	</div>
-
 	<!-- Modal Class-->
-	<div class="modal fade" id="PopupClassModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal fade" id="PopupCourseModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="exampleModalLabel">Thông Tin Khóa Họcc</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        <form id="formPopupClass">
+				<div class="form-group">
+					<label for="courseID">Mã Khóa Học</label>
+					<input type="text" id="courseID" class="form-control" required>
+				</div>
+				<div class="form-group">
+					<label for="courseName">Tên Khóa Học</label>
+					<input type="text" id="courseName" class="form-control" required>
+				</div>
+				<div class="form-group">
+					<label for="courseStart">Ngày bắt đầu</label>
+					<input type="date" id="courseStart" class="form-control" required>
+				</div>
+				<div class="form-group">
+					<label for="courseEnd">Ngày kết thúc</label>
+					<input type="date" id="courseEnd" name="courseEnd" class="form-control" required>
+				</div>
+				<div class="form-group">
+					<label for="coursePrice">Giá</label>
+					<input type="number" id="coursePrice" name="coursePrice" class="form-control" required>
+				</div>
+			</form>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+	        <button type="button" class="btn btn-primary">Save changes</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	<!-- Modal Class-->
+	<!-- <div class="modal fade" id="PopupClassModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">
 	      <div class="modal-header">
@@ -122,7 +185,7 @@
 	      </div>
 	    </div>
 	  </div>
-	</div>
+	</div> -->
 
 	<!-- Modal Student-->
 	<div class="modal fade" id="PopupStudentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -269,28 +332,48 @@
 	{
 
 	});
-	function detailItem()
+	function detailItemCourse()
 	{
-		var name = $('#item_class_name').find('option:selected').val();
+		var name = $('#item_course_name').find('option:selected').val();
 		$.ajax({
 	      type: "POST",
-	      url: '<?php echo $ajaxDetailClass; ?>', 
-	      data: {class_name:name},
+	      url: '<?php echo $ajaxDetailCourse; ?>', 
+	      data: {course_name:name},
 	      dataType: 'json',
 	 	}).done(function(data) {
 	 		ketqua = data.ketqua;
 	 		for(var i = 0; i < ketqua.length; i++)
 	 		{
-	 			$('#classID').val(ketqua[i].class_id);
-	 			$('#className').val(ketqua[i].class_name);
-	 			$('#classDescription').val(ketqua[i].class_description);
-	 			$('#classOpen').val(ketqua[i].class_open);
-	 			$('#classFinish').val(ketqua[i].class_finish);
-	 			$('#classLevel').val(ketqua[i].level_id);
-	 			$('#classCourse').val(ketqua[i].course_id);
+	 			$('#courseID').val(ketqua[i].course_id);
+	 			$('#courseName').val(ketqua[i].course_name);
+	 			$('#courseStart').val(ketqua[i].course_start);
+	 			$('#courseEnd').val(ketqua[i].course_end);
+	 			$('#coursePrice').val(ketqua[i].course_price);
 	 		}
 	 	});
 	}
+	// function detailItem()
+	// {
+	// 	var name = $('#item_class_name').find('option:selected').val();
+	// 	$.ajax({
+	//       type: "POST",
+	//       url: '<?php echo $ajaxDetailClass; ?>', 
+	//       data: {class_name:name},
+	//       dataType: 'json',
+	//  	}).done(function(data) {
+	//  		ketqua = data.ketqua;
+	//  		for(var i = 0; i < ketqua.length; i++)
+	//  		{
+	//  			$('#classID').val(ketqua[i].class_id);
+	//  			$('#className').val(ketqua[i].class_name);
+	//  			$('#classDescription').val(ketqua[i].class_description);
+	//  			$('#classOpen').val(ketqua[i].class_open);
+	//  			$('#classFinish').val(ketqua[i].class_finish);
+	//  			$('#classLevel').val(ketqua[i].level_id);
+	//  			$('#classCourse').val(ketqua[i].course_id);
+	//  		}
+	//  	});
+	// }
 
 	function detailItemStudent()
 	{
@@ -361,16 +444,22 @@
 	e.preventDefault();
 		var student_id = $('#item_student_name').find('option:selected').attr("student_id"),
 			student_name = $('#item_student_name').find('option:selected').val(),
-			class_name = $('#item_class_name').find('option:selected').val(),
+			course_id = $('#item_course_name').find('option:selected').attr("courseID"),
+			course_name = $('#item_course_name').find('option:selected').val(),
+			level_id = $('#item_level_name').find('option:selected').val(),
 			teacher_name = $('#item_teacher_name').find('option:selected').val(),
+			shift_id = $('#item_shift_name').find('option:selected').attr("shiftID"),
 			shift_name = $('#item_shift_name').find('option:selected').val(),
 			precent_debt = $('#precent_debt').val();
 			var data = {
 				student_id:student_id,
 				student_name:student_name,
-				class_name:class_name, 
+				course_id:course_id,
+				course_name:course_name,
+				level_id:level_id, 
 				teacher_name:teacher_name, 
-				shift_name:shift_name, 
+				shift_name:shift_name,
+				shift_id:shift_id,
 				precent_debt: precent_debt, 
 			};
 		
