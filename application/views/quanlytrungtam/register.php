@@ -93,7 +93,8 @@
 				<button class ="btn btn-primary btn-md">SAVE</a></button>
 			</form>
 			<div class="alert bg-info hidden" role="alert" id="success"><em class="fa fa-lg fa-warning">&nbsp;</em> Đã đăng ký thành công ! <em class="fa fa-lg fa-close"></em></a></div>
-			<div class="alert bg-teal hidden" role="alert" id="fail"><em class="fa fa-lg fa-warning">&nbsp;</em> Đăng ký không thành công ! <em class="fa fa-lg fa-close"></em></a></div>
+			<div class="alert bg-info hidden" role="alert" id="fail-shift"><em class="fa fa-lg fa-warning">&nbsp;</em> Đã trùng lịch vui lòng kiểm tra lại ! <em class="fa fa-lg fa-close"></em></a></div>
+			<div class="alert bg-teal hidden" role="alert" id="fail"><em class="fa fa-lg fa-warning">&nbsp;</em> Lớp đã đăng ký rồi ! <em class="fa fa-lg fa-close"></em></a></div>
 		</div>
 	</div>
 	<!-- Modal Class-->
@@ -472,7 +473,14 @@
 			var kq = data.ketqua;
 		  	if(kq > 0)
 		  	{
-		  		$('#success').removeClass('hidden');
+		  		if(kq > 1)
+		  		{
+		  			$('#fail-shift').removeClass('hidden');
+		  		}
+		  		else
+		  		{
+		  			$('#success').removeClass('hidden');
+		  		}
 		  		//alert("Đã thêm cấu hình thành công !");
 		  	}
 		  	else

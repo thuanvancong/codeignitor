@@ -108,8 +108,9 @@ class Register extends Pageparent_Controller
             $DB_Register_By_ID_Student_Shift = $this->quanlytrungtam_model->GetDB_Register_By_ID_Student_Shift($student_id,$shift_id);
             if(!empty($DB_Register_By_ID_Student_Shift))
             {
-                echo 'Đã trùng lịch';
-                die();
+                $ketquaAjax = array(
+                    'ketqua' => 2
+                );
             }
             else
             {
@@ -154,6 +155,9 @@ class Register extends Pageparent_Controller
                                 'date_update' => $date_format
                             );
                             $id_student_class=$this->quanlytrungtam_model->InsertDB($dataInsertClass,'class');
+                            $ketquaAjax = array(
+                                'ketqua' => 1
+                            );
                         }
                         // else
                         // {
@@ -202,11 +206,11 @@ class Register extends Pageparent_Controller
                                     //$id_student_class=$this->quanlytrungtam_model->InsertDB($dataInsertClass,'class');
                                 }
                             }
+                            $ketquaAjax = array(
+                                'ketqua' => 1
+                            );
                         }
                     }
-                    $ketquaAjax = array(
-                        'ketqua' => 1
-                    );
                 }
             }
         }
@@ -216,7 +220,8 @@ class Register extends Pageparent_Controller
             $ketquaAjax = array(
                 'ketqua' => 0
             );
-        }   
+        }
+        echo json_encode($ketquaAjax);
     }
 
     function CountAmountStudent()
