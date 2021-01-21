@@ -27,43 +27,25 @@ class Schedule extends Pageparent_Controller
       $this->load->model("quanlytrungtam_model");
       $data = $this->quanlytrungtam_model->getItemScheduleByIndentify($student_identitycard);
       $mang = array();
-      $extend = array();
-      for ($i=0; $i < count($data); $i++)
-      {
-        $id_class_student = $data[$i]['class_student_id'];
-        $arrayStudentName = $this->quanlytrungtam_model->getStudentNameByID($data[$i]['student_id']);
-        $arrayClassName = $this->quanlytrungtam_model->getClassNameByID($data[$i]['class_id']);
-        $arrayShift = $this->quanlytrungtam_model->getShiftTimeByID($data[$i]['shift_id']);
-        $arrayTeacherName = $this->quanlytrungtam_model->getTeacherNameByID($data[$i]['teacher_id']);
-        // $extend['arrayStudentName'] = $arrayStudentName;
-        // $extend['arrayClassName'] = $arrayClassName;
-        // $extend['arrayShift'] = $arrayShift;
-        // $extend['arrayTeacherName'] = $arrayTeacherName;
-        $extend['arrayStudentName'] = $arrayStudentName[0];
-        $extend['arrayClassName'] = $arrayClassName[0];
-        $extend['arrayShift'] = $arrayShift[0];
-        $extend['arrayTeacherName'] = $arrayTeacherName[0];
-        $mang[] = $extend;
-      }
-      $ketquaAjax = array();
-      for ($i=0; $i < count($mang); $i++)
-      {
-        $student_name = $mang[$i]['arrayStudentName']['student_name'];
-        $class_name = $mang[$i]['arrayClassName']['class_name'];
-        $teacher_name = $mang[$i]['arrayTeacherName']['teacher_name'];
-        $time_in = $mang[$i]['arrayShift']['time_in'];
-        $time_out = $mang[$i]['arrayShift']['time_out'];
-        $mangExtend = array(
-          'student_name' => $student_name,
-          'class_name' => $class_name,
-          'teacher_name' => $teacher_name,
+      foreach ($data as $key => $value) {
+        $arrayDB = $value;
+        $arrayShift = $this->quanlytrungtam_model->getShiftTimeByID($arrayDB['shift_id']);
+        foreach ($arrayShift as $key => $value) {
+          $time_in = $value['time_in'];
+          $time_out = $value['time_out'];
+        }
+        $mang[] = array(
+          'student_name' => $arrayDB['student_name'],
+          'class_name' => $arrayDB['class_name'].$arrayDB['level_id'].$arrayDB['class_code'],
+          'shift_id' => $arrayDB['shift_id'],
           'time_in' => $time_in,
-          'time_out' => $time_out
+          'time_out' =>$time_out
         );
-        $ketquaAjax[] = $mangExtend;
       }
+      
+      $mangExtend = $mang;
       $ketqua = array(
-        'ketqua' => $ketquaAjax
+        'ketqua' => $mangExtend
       );
       echo json_encode($ketqua);
     }
@@ -81,6 +63,7 @@ class Schedule extends Pageparent_Controller
         $arrayStudentName = $this->quanlytrungtam_model->getStudentNameByID($data[$i]['student_id']);
         $arrayClassName = $this->quanlytrungtam_model->getClassNameByID($data[$i]['class_id']);
         $arrayShift = $this->quanlytrungtam_model->getShiftTimeByID($data[$i]['shift_id']);
+        
         $arrayTeacherName = $this->quanlytrungtam_model->getTeacherNameByID($data[$i]['teacher_id']);
         // $extend['arrayStudentName'] = $arrayStudentName;
         // $extend['arrayClassName'] = $arrayClassName;

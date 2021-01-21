@@ -107,7 +107,7 @@ class quanlytrungtam_model extends CI_Model
 	function getClassNameByID($class_id)
 	{
 		$this->load->database();
-		$query = $this->db->query("select class_name from class where class_id=$class_id");
+		$query = $this->db->query("select level_id,class_name from class where class_id=$class_id");
 		return $query->result_array();
 	}
 	function getTeacherNameByID($teacher_id)
@@ -197,8 +197,23 @@ class quanlytrungtam_model extends CI_Model
 
 	function getItemScheduleByIndentify($student_identitycard)
 	{
+		// $this->load->database();
+		// $query = $this->db->query("select * from ( select student_id from student where student_identitycard = $student_identitycard) as STUDENT inner join extend_class_student on STUDENT.student_id = extend_class_student.student_id ");
+		// return $query->result_array();
 		$this->load->database();
-		$query = $this->db->query("select * from ( select student_id from student where student_identitycard = $student_identitycard) as STUDENT inner join class_by_student on STUDENT.student_id = class_by_student.student_id ");
+		$query = $this->db->query("select *
+									from (select Extend.student_id as student_id,
+											Extend.extend_id as extend_id,
+									        Extend.class_id as class_id,
+									        Extend.class_code as class_code,
+									        Extend.shift_id as shift_id,
+									        Extend.precent_debt as precent_debt,
+									        Student.student_name as student_name
+										from (select student_id,student_name
+												from student 
+												where student_identitycard = $student_identitycard) AS Student 
+										inner join extend_class_student as Extend 
+										on Student.student_id = Extend.student_id) AS Extend2 inner join class on Extend2.class_id = class.class_id");
 		return $query->result_array();
 	}
 

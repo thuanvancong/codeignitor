@@ -38,7 +38,6 @@
 							<tr>
 							    <th>Lớp</th>
 							    <th>Tên Học Viên</th> 
-							    <th>Giáo Viên Phụ Trách</th>
 							    <th>Thời Gian Vào</th>
 							    <th>Thời Gian Ra</th>
 							</tr>
@@ -94,7 +93,7 @@
 			var i;
 			for(i = 0;i < ketqua.length;i++)
 			{
-				htmlString = '<tr><td id="schedule_class_id"'+ketqua[i].student_id+'>'+ketqua[i].class_name+'</td><td id="schedule_student_id"'+ketqua[i].student_id+'>'+ketqua[i].student_name+'</td><td id="schedule_student_id"'+ketqua[i].student_id+'>'+ketqua[i].teacher_name+'</td><td id="schedule_student_id"'+ketqua[i].student_id+'>'+ketqua[i].time_in+'</td><td id="schedule_student_id"'+ketqua[i].student_id+'>'+ketqua[i].time_out+'</td></tr>';
+				htmlString = '<tr><td id="schedule_class_id"'+ketqua[i].student_id+'>'+ketqua[i].class_name+'</td><td id="schedule_student_id"'+ketqua[i].student_id+'>'+ketqua[i].student_name+'</td><td id="schedule_student_id"'+ketqua[i].student_id+'>'+ketqua[i].time_in+'</td><td id="schedule_student_id"'+ketqua[i].student_id+'>'+ketqua[i].time_out+'</td></tr>';
 				$('#table-schedule-student').find('tbody').append(htmlString);
 			}
 		});
