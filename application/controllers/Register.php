@@ -109,6 +109,8 @@ class Register extends Pageparent_Controller
                     'class_id' => $class_id,
                     'student_id' => $student_id,
                     'class_code' => 'A',
+                    'shift_id' => $shift_id,
+                    'precent_debt' => $precent_debt
                 );
                 $id_extend=$this->quanlytrungtam_model->InsertDB($dataInsertDB_Extend,'extend_class_student');
 
@@ -128,7 +130,9 @@ class Register extends Pageparent_Controller
                     $dataInsertDB_Extend = array(
                         'class_id' => $class_id,
                         'student_id' => $student_id,
-                        'class_code' => $class_code
+                        'class_code' => $class_code,
+                        'shift_id' => $shift_id,
+                        'precent_debt' => $precent_debt
                     );
                     $id_extend=$this->quanlytrungtam_model->InsertDB($dataInsertDB_Extend,'extend_class_student');
                 }
@@ -146,7 +150,9 @@ class Register extends Pageparent_Controller
                     $dataInsertDB_Extend = array(
                         'class_id' => $class_id,
                         'student_id' => $student_id,
-                        'class_code' => $class_code
+                        'class_code' => $class_code,
+                        'shift_id' => $shift_id,
+                        'precent_debt' => $precent_debt
                     );
                     $id_extend=$this->quanlytrungtam_model->InsertDB($dataInsertDB_Extend,'extend_class_student');
                 }
