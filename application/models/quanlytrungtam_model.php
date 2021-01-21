@@ -346,5 +346,42 @@ class quanlytrungtam_model extends CI_Model
 									where student_id = $student_id and shift_id = $shift_id ");
 		return $query->result_array();
 	}
+	// REGISTER MODEL
+	function Data_Class_Student_By_ID($class_id,$class_code)
+	{
+		$this->load->database();
+		$query = $this->db->query("select * 
+									from extend_class_student 
+									where class_id = $class_id and class_code like '%$class_code%' ");
+		return $query->result_array();
+	} 	
+
+	function Count_Class_Student($class_id,$class_code)
+	{
+		$this->load->database();
+		$query = $this->db->query("select count(class_id) as Count 
+									from extend_class_student 
+									where class_id = $class_id and class_code like N'%$class_code%' ");
+		return $query->result_array();
+	}
+
+	function Point_Latest_Class_Student($class_id)
+	{
+		$this->load->database();
+		$query = $this->db->query("select * 
+									from extend_class_student 
+									where class_id = $class_id  
+									order by class_code desc");
+		return $query->result_array();
+	}
+
+	function Check_Class_Student_By_ID($student_id,$class_id)
+	{
+		$this->load->database();
+		$query = $this->db->query("select * 
+								from extend_class_student 
+								where student_id = $student_id and class_id = $class_id");
+		return $query->result_array();
+	}	
 }
 ?>

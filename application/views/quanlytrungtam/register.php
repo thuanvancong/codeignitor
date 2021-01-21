@@ -15,7 +15,7 @@
 	<div class="panel-body">
 		<div class="col-md-6">
 			<form id="formRegister" action="ajaxRegister" method="POST">
-				<div class="form-group">
+				<!-- <div class="form-group">
 					<label>Danh sách Khóa Học</label>
 					<select class="form-control" id="item_course_name">
 					<?php 
@@ -37,19 +37,19 @@
 						}
 					?>
 					</select>
-				</div>
-				<!-- <div class="form-group">
+				</div> -->
+				<div class="form-group">
 					<label>Danh sách lớp học</label>
 					<select class="form-control" id="item_class_name">
 					<?php 
 						foreach ($dataClass as $key => $value) {
 							$className = $value['class_name'];
-							echo '<option id="class_name'.$value['class_id'].'">'.$className.'</option>';
+							echo '<option id="class_name'.$value['class_id'].'" class_id="'.$value['class_id'].'">'.$className.'</option>';
 						}
 					?>
 					</select>
 					<button type="button" class="btn btn-link" data-toggle="modal" data-target="#PopupClassModal" onclick="detailItem()">Xem Chi Tiết</button>
-				</div> -->
+				</div>
 				<div class="form-group">
 					<label>Danh sách sinh viên</label>
 					<select class="form-control" id="item_student_name">
@@ -62,7 +62,7 @@
 					</select>
 					<button type="button" class="btn btn-link" data-toggle="modal" data-target="#PopupStudentModal" onclick="detailItemStudent()">Xem Chi Tiết</button>
 				</div>
-				<div class="form-group">
+				<!-- <div class="form-group">
 					<label>Chọn giáo viên</label>
 					<select class="form-control" id="item_teacher_name">
 					<?php 
@@ -73,7 +73,7 @@
 					?>
 					</select>
 					<button type="button" class="btn btn-link" data-toggle="modal" data-target="#PopupTeacherModal" onclick="detailItemTeacher()">Xem Chi Tiết</button>
-				</div>
+				</div> -->
 				<div class="form-group">
 					<label>Phần trăm tiền</label>
 					<input type='number' class="form-control" placeholder="100% là đã trả đủ" id="precent_debt" min="50" max="100" require>
@@ -98,7 +98,7 @@
 		</div>
 	</div>
 	<!-- Modal Class-->
-	<div class="modal fade" id="PopupCourseModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<!-- <div class="modal fade" id="PopupCourseModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">
 	      <div class="modal-header">
@@ -137,9 +137,9 @@
 	      </div>
 	    </div>
 	  </div>
-	</div>
+	</div> -->
 	<!-- Modal Class-->
-	<!-- <div class="modal fade" id="PopupClassModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal fade" id="PopupClassModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">
 	      <div class="modal-header">
@@ -186,7 +186,7 @@
 	      </div>
 	    </div>
 	  </div>
-	</div> -->
+	</div>
 
 	<!-- Modal Student-->
 	<div class="modal fade" id="PopupStudentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -248,7 +248,7 @@
 	</div>
 
 	<!-- Modal Teacher-->
-	<div class="modal fade" id="PopupTeacherModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<!-- <div class="modal fade" id="PopupTeacherModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">
 	      <div class="modal-header">
@@ -287,7 +287,7 @@
 	      </div>
 	    </div>
 	  </div>
-	</div>
+	</div> -->
 	<!-- Modal Shift-->
 	<div class="modal fade" id="PopupShiftModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	  <div class="modal-dialog" role="document">
@@ -333,48 +333,48 @@
 	{
 
 	});
-	function detailItemCourse()
-	{
-		var name = $('#item_course_name').find('option:selected').val();
-		$.ajax({
-	      type: "POST",
-	      url: '<?php echo $ajaxDetailCourse; ?>', 
-	      data: {course_name:name},
-	      dataType: 'json',
-	 	}).done(function(data) {
-	 		ketqua = data.ketqua;
-	 		for(var i = 0; i < ketqua.length; i++)
-	 		{
-	 			$('#courseID').val(ketqua[i].course_id);
-	 			$('#courseName').val(ketqua[i].course_name);
-	 			$('#courseStart').val(ketqua[i].course_start);
-	 			$('#courseEnd').val(ketqua[i].course_end);
-	 			$('#coursePrice').val(ketqua[i].course_price);
-	 		}
-	 	});
-	}
-	// function detailItem()
+	// function detailItemCourse()
 	// {
-	// 	var name = $('#item_class_name').find('option:selected').val();
+	// 	var name = $('#item_course_name').find('option:selected').val();
 	// 	$.ajax({
 	//       type: "POST",
-	//       url: '<?php echo $ajaxDetailClass; ?>', 
-	//       data: {class_name:name},
+	//       url: '<?php echo $ajaxDetailCourse; ?>', 
+	//       data: {course_name:name},
 	//       dataType: 'json',
 	//  	}).done(function(data) {
 	//  		ketqua = data.ketqua;
 	//  		for(var i = 0; i < ketqua.length; i++)
 	//  		{
-	//  			$('#classID').val(ketqua[i].class_id);
-	//  			$('#className').val(ketqua[i].class_name);
-	//  			$('#classDescription').val(ketqua[i].class_description);
-	//  			$('#classOpen').val(ketqua[i].class_open);
-	//  			$('#classFinish').val(ketqua[i].class_finish);
-	//  			$('#classLevel').val(ketqua[i].level_id);
-	//  			$('#classCourse').val(ketqua[i].course_id);
+	//  			$('#courseID').val(ketqua[i].course_id);
+	//  			$('#courseName').val(ketqua[i].course_name);
+	//  			$('#courseStart').val(ketqua[i].course_start);
+	//  			$('#courseEnd').val(ketqua[i].course_end);
+	//  			$('#coursePrice').val(ketqua[i].course_price);
 	//  		}
 	//  	});
 	// }
+	function detailItem()
+	{
+		var name = $('#item_class_name').find('option:selected').val();
+		$.ajax({
+	      type: "POST",
+	      url: '<?php echo $ajaxDetailClass; ?>', 
+	      data: {class_name:name},
+	      dataType: 'json',
+	 	}).done(function(data) {
+	 		ketqua = data.ketqua;
+	 		for(var i = 0; i < ketqua.length; i++)
+	 		{
+	 			$('#classID').val(ketqua[i].class_id);
+	 			$('#className').val(ketqua[i].class_name);
+	 			$('#classDescription').val(ketqua[i].class_description);
+	 			$('#classOpen').val(ketqua[i].class_open);
+	 			$('#classFinish').val(ketqua[i].class_finish);
+	 			$('#classLevel').val(ketqua[i].level_id);
+	 			$('#classCourse').val(ketqua[i].course_id);
+	 		}
+	 	});
+	}
 
 	function detailItemStudent()
 	{
@@ -401,26 +401,26 @@
 	 	});
 	}
 
-	function detailItemTeacher()
-	{
-		var name = $('#item_teacher_name').find('option:selected').val();
-		$.ajax({
-	      type: "POST",
-	      url: '<?php echo $ajaxDetailTeacher; ?>', 
-	      data: {teacher_name:name},
-	      dataType: 'json',
-	 	}).done(function(data) {
-	 		ketqua = data.ketqua;
-	 		for(var i = 0; i < ketqua.length; i++)
-	 		{
-	 			$('#teacherID').val(ketqua[i].teacher_id);
-	 			$('#teacherName').val(ketqua[i].teacher_name);
-	 			$('#teacherOld').val(ketqua[i].teacher_old);
-	 			$('#teacherSex').val(ketqua[i].teacher_sex);
-	 			$('#teacherAddress').val(ketqua[i].teacher_address);
-	 		}
-	 	});
-	}
+	// function detailItemTeacher()
+	// {
+	// 	var name = $('#item_teacher_name').find('option:selected').val();
+	// 	$.ajax({
+	//       type: "POST",
+	//       url: '<?php echo $ajaxDetailTeacher; ?>', 
+	//       data: {teacher_name:name},
+	//       dataType: 'json',
+	//  	}).done(function(data) {
+	//  		ketqua = data.ketqua;
+	//  		for(var i = 0; i < ketqua.length; i++)
+	//  		{
+	//  			$('#teacherID').val(ketqua[i].teacher_id);
+	//  			$('#teacherName').val(ketqua[i].teacher_name);
+	//  			$('#teacherOld').val(ketqua[i].teacher_old);
+	//  			$('#teacherSex').val(ketqua[i].teacher_sex);
+	//  			$('#teacherAddress').val(ketqua[i].teacher_address);
+	//  		}
+	//  	});
+	// }
 	function detailItemShift()
 	{
 		var name = $('#item_shift_name').find('option:selected').val();
@@ -445,20 +445,24 @@
 	e.preventDefault();
 		var student_id = $('#item_student_name').find('option:selected').attr("student_id"),
 			student_name = $('#item_student_name').find('option:selected').val(),
-			course_id = $('#item_course_name').find('option:selected').attr("courseID"),
-			course_name = $('#item_course_name').find('option:selected').val(),
-			level_id = $('#item_level_name').find('option:selected').val(),
-			teacher_name = $('#item_teacher_name').find('option:selected').val(),
+			class_id = $('#item_class_name').find('option:selected').attr("class_id"),
+			class_name = $('#item_class_name').find('option:selected').val(),
+			// course_id = $('#item_course_name').find('option:selected').attr("courseID"),
+			// course_name = $('#item_course_name').find('option:selected').val(),
+			// level_id = $('#item_level_name').find('option:selected').val(),
+			// teacher_name = $('#item_teacher_name').find('option:selected').val(),
 			shift_id = $('#item_shift_name').find('option:selected').attr("shiftID"),
 			shift_name = $('#item_shift_name').find('option:selected').val(),
 			precent_debt = $('#precent_debt').val();
 			var data = {
 				student_id:student_id,
 				student_name:student_name,
-				course_id:course_id,
-				course_name:course_name,
-				level_id:level_id, 
-				teacher_name:teacher_name, 
+				class_id:class_id,
+				class_name:class_name,
+				// course_id:course_id,
+				// course_name:course_name,
+				// level_id:level_id, 
+				// teacher_name:teacher_name, 
 				shift_name:shift_name,
 				shift_id:shift_id,
 				precent_debt: precent_debt, 
