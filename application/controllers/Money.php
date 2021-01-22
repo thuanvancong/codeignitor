@@ -24,6 +24,7 @@ class Money extends Pageparent_Controller
     	$data['ajaxDetailPayment'] = site_url("Money/ajaxDetailPayment");
     	$data['ajaxPayment'] = site_url("Money/ajaxPayment");
     	$data['pageMoneyStudent'] = site_url("Money/moneyStudent");
+        $data['dbClass'] = $this->quanlytrungtam_model->GetDBTable('class');
     	$this->load->model("quanlytrungtam_model");
     	$data['dbExtend'] = $this->quanlytrungtam_model->getDBJoin_STUDENT_CLASS_EXTENTD();
     	$this->load->view("quanlytrungtam/layout",$data);
@@ -31,10 +32,11 @@ class Money extends Pageparent_Controller
 
     function ajaxDetailPayment()
     {
-    	$student_identitycard = $_POST['studentIdentitycard'];
-    	$class_name = $_POST['className'];
+    	$student_identitycard = (int)$_POST['studentIdentitycard'];
+        $class_id = (int)$_POST['schedule_class'];
+        $level_id = (int)$_POST['level_id'];
     	$this->load->model("quanlytrungtam_model");
-    	$dbExtend = $this->quanlytrungtam_model->getDB_STUDENT_CLASS_EXTENTD_BY_INDENTITYCARD($student_identitycard,$class_name);
+    	$dbExtend = $this->quanlytrungtam_model->getDB_STUDENT_CLASS_EXTENTD_BY_INDENTITYCARD($student_identitycard,$class_id,$level_id);
     	$ketquaAjax = array(
     		'ketqua' => $dbExtend
     	);
@@ -47,8 +49,8 @@ class Money extends Pageparent_Controller
     	$precent_debt = $_POST['precentDebt'];
     	$precent_payment = $_POST['precentPayment'];
     	$updateMoney = $precent_debt + $precent_payment;
-    	$table = 'class_by_student';
-    	$idTable = 'class_student_id';
+    	$table = 'extend_class_student';
+    	$idTable = 'extend_id';
     	$dataUpdate = array(
     		'precent_debt' => (int)$updateMoney
     	);

@@ -32,14 +32,15 @@
 						<tbody>
 							<?php 
 								foreach ($dbExtend as $key => $value) {
-									$money_debt = 100 - $value['precent_debt'];
+									$money = $value['course_price']*$value['precent_debt']/100;
+									$money_debt = $value['course_price']-$money;
 									echo 
 									'<tr>
 										<td id="student-name'.$value['student_identitycard'].'" class="student-name">'.$value['student_name'].'</td>
 										<td id="student-identitycard'.$value['student_identitycard'].'" class="student-identitycard">'.$value['student_identitycard'].'</td>
 										<td id="class-name'.$value['class_id'].'" class="class-name">'.$value['class_name'].'</td>
-										<td id="precent_pay'.$value['student_identitycard'].'" class="precent_pay">'.$value['precent_debt'].'</td>
-										<td id="precent_debt'.$value['student_identitycard'].'" class="precent_debt">'.$money_debt.'</td>';
+										<td id="precent_pay'.$value['student_identitycard'].'" class="precent_pay" price="'.$money.'">'.number_format($money).'</td>
+										<td id="precent_debt'.$value['student_identitycard'].'" class="precent_debt" price-debt="'.$money_debt.'">'.number_format($money_debt).'</td>';
 
 								}
 								echo'</tr>';
@@ -67,18 +68,35 @@
 					<label for="studentIdentitycard">Nhập CMND</label>
 					<input type="text" id="studentIdentitycard" class="form-control"  ClassStudentID=0 required>
 				</div>
-				<div class="form-group">
-					<label for="className">Nhập Tên Lớp</label>
-					<input type="text" id="className" class="form-control" required>
+				<div class="form-group" id="schedule-class">
+					<label>Chọn Lớp</label>
+					<select class="form-control">
+						<?php 
+						foreach ($dbClass as $key => $value) {
+							echo 
+							'
+								<option class="option-class-name" value="'.$value['class_id'].'" class_level="'.$value['level_id'].'" selected="selected">'.$value['class_name'].'</option>
+							';
+						}
+						?>
+					</select>
+					<!-- <label for="className">Nhập Tên Lớp</label>
+					<input type="text" id="className" class="form-control" required> -->
 					<button type="button" class="btn btn-link fa fa-arrow-right" onclick="detailItemPaymenyt()"> Lấy thông tin</button>
 				</div>
 				<div class="form-group">
+					<label for="">CODE CLASS</label>
+					<select class="form-control" id="class_code">
+						
+					</select>
+				</div>
+				<div class="form-group">
 					<label for="precentDebt">Phần Trăm Đã Đóng</label>
-					<input type="number" id="precentDebt" class="form-control">
+					<input type="number" id="precentDebt" class="form-control" money=0>
 				</div>
 				<div class="form-group">
 					<label for="precentPayment">Số Tiền Còn Lại</label>
-					<input type="number" id="precentPayment" class="form-control">
+					<input type="number" id="precentPayment" class="form-control" money-debt=0>
 				</div>
 			</form>
 	      </div>
@@ -104,10 +122,12 @@ $(document).ready(function(){
 function detailItemPaymenyt()
 {
 	var studentIdentitycard = $('#studentIdentitycard').val(),
-		className = $('#className').val();
+		level_id = $('#schedule-class').find('option:selected').attr("class_level"),
+		schedule_class = $('#schedule-class').find('option:selected').val()
 	var data = {
 		studentIdentitycard: studentIdentitycard,
-		className : className
+		level_id : level_id,
+		schedule_class:schedule_class
 	};
 	$.ajax({
 	  type: "POST",
@@ -120,10 +140,16 @@ function detailItemPaymenyt()
 		{ 
 			for(var i = 0; i < ketqua.length; i++)
 			{
-				var precent_pay = 100-ketqua[i].precent_debt;
-				$('#precentDebt').val(ketqua[i].precent_debt);
-				$('#precentPayment').val(precent_pay);
-				$('#studentIdentitycard').attr("ClassStudentID",ketqua[i].class_student_id);
+				var money = ketqua[i]['course_price']*ketqua[i]['precent_debt']/100,
+					money_debt = ketqua[i]['course_price']-money;
+					precent_pay = 100 - ketqua[i]['precent_debt'];
+				$('#precentDebt').val(money);
+				$('#precentPayment').val(money_debt);
+				$('#class_code').append('<option class="option-class-code" value="'+ketqua[i]['class_code']+'" class_level="'+ketqua[i]['class_code']+'" selected="selected">'+ketqua[i]['class_code']+'</option>');
+				$('#studentIdentitycard').attr("ClassStudentID",ketqua[i]['student_id']);
+				$('#precentDebt').attr("money",ketqua[i]['precent_debt']);
+				$('#precentPayment').attr("money-debt",precent_pay);
+				console.log(ketqua[i]['student_id']);
 				if(ketqua[i].precent_debt == 100)
 				{
 					alert("Đã Thanh Toán Đủ");
@@ -140,8 +166,8 @@ function detailItemPaymenyt()
 
 function ajaxUpdatePaymentDebt()
 {
-	var precentPayment = $('#precentPayment').val(),
-		precentDebt = $('#precentDebt').val(),
+	var precentPayment = $('#precentPayment').attr("money-debt"),
+		precentDebt = $('#precentDebt').attr("money"),
 		class_student_id = $('#studentIdentitycard').attr("ClassStudentID"),
 		data = {
 			precentPayment:precentPayment,

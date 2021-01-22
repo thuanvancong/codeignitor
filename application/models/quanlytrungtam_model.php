@@ -258,54 +258,83 @@ class quanlytrungtam_model extends CI_Model
 	{
 		$this->load->database();
 		$query = $this->db->query("select 
+										EXTEND2.class_id,
+										EXTEND2.class_name,
+										EXTEND2.course_id,
+										EXTEND2.extend_id,
+										EXTEND2.student_name,
+										EXTEND2.student_identitycard,
+										EXTEND2.precent_debt,
+										course.course_price
+									from (select 
 										class.class_id,
 										class.class_name,
 										class.course_id,
+									    EXTEND_STUDENT.extend_id,
 										EXTEND_STUDENT.student_name,
 										EXTEND_STUDENT.student_identitycard,
 										EXTEND_STUDENT.precent_debt
 									from 
 										(select 
-											class_student_id,
-											precent_debt,
-									        shift_id,
-									        class_id,
-									        student_name,
-									        student_identitycard 
-									        from class_by_student 
-									        left join student 
-									        on class_by_student.student_id = student.student_id) AS EXTEND_STUDENT 
-									left join class 
-									on EXTEND_STUDENT.class_id = CLASS.class_id");
-		return $query->result_array();
-	}
-
-	function getDB_STUDENT_CLASS_EXTENTD_BY_INDENTITYCARD($student_identitycard,$class_name)
-	{
-		$this->load->database();
-		$query = $this->db->query("select 
-										class.class_id,
-										class.class_name,
-										class.course_id,
-										EXTEND_STUDENT.student_name,
-										EXTEND_STUDENT.student_identitycard,
-										EXTEND_STUDENT.precent_debt,
-										EXTEND_STUDENT.class_student_id
-									from 
-										(select 
-											class_student_id,
+											extend_class_student.extend_id,
 											precent_debt,
 											shift_id,
 											class_id,
 											student_name,
 											student_identitycard 
-											from class_by_student 
+											from extend_class_student 
 											left join student 
-											on class_by_student.student_id = student.student_id 
-									        where student_identitycard = $student_identitycard) AS EXTEND_STUDENT
+											on extend_class_student.student_id = student.student_id) AS EXTEND_STUDENT 
 									left join class 
-									on EXTEND_STUDENT.class_id = CLASS.class_id
-									where class_name like N'%$class_name%'");
+									on EXTEND_STUDENT.class_id = CLASS.class_id) as EXTEND2
+									inner join course 
+									on EXTEND2.course_id = course.course_id ");
+		return $query->result_array();
+	}
+
+	function getDB_STUDENT_CLASS_EXTENTD_BY_INDENTITYCARD($student_identitycard,$class_id,$level_id)
+	{	
+		$this->load->database();
+		$query = $this->db->query("select 
+									EXTEND2.class_id,
+									EXTEND2.class_name,
+									EXTEND2.course_id,
+									EXTEND2.extend_id,
+									EXTEND2.student_name,
+									EXTEND2.student_identitycard,
+									EXTEND2.precent_debt,
+									EXTEND2.class_code,
+									EXTEND2.student_id,
+									course.course_price
+									from (select 
+										class.class_id,
+										class.class_name,
+										class.course_id,
+									    EXTEND_STUDENT.extend_id,
+										EXTEND_STUDENT.student_name,
+										EXTEND_STUDENT.student_identitycard,
+										EXTEND_STUDENT.precent_debt,
+										EXTEND_STUDENT.class_code,
+										EXTEND_STUDENT.student_id
+									from 
+										(select 
+											extend_class_student.extend_id,
+											extend_class_student.class_code,
+											precent_debt,
+											shift_id,
+											class_id,
+											student_name,
+											student_identitycard,
+											student.student_id
+											from extend_class_student 
+											left join student 
+											on extend_class_student.student_id = student.student_id 
+									        where student.student_identitycard = $student_identitycard) AS EXTEND_STUDENT 
+											left join class 
+											on EXTEND_STUDENT.class_id = CLASS.class_id 
+									        where CLASS.class_id = $class_id and CLASS.level_id = $level_id) as EXTEND2
+									inner join course 
+									on EXTEND2.course_id = course.course_id ");
 		return $query->result_array();
 	}
 
