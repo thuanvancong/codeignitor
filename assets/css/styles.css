@@ -1205,3 +1205,20 @@ table#table-config
 #table-money-student {
   margin-left: 0px;
 }
+
+#formScheduleClass
+{
+  margin-left: 15px;
+  width: 50%;
+}
+
+#filterInput
+{
+  width: 50%;
+}
+
+#schedule-student
+{
+  margin-left: 15px;
+  width: 54%;
+}

@@ -217,10 +217,40 @@ class quanlytrungtam_model extends CI_Model
 		return $query->result_array();
 	}
 
-	function getItemScheduleByClass($class_name)
+	function getItemScheduleByClass($class_id)
 	{
 		$this->load->database();
-		$query = $this->db->query("select * from ( select class_id,class_name from class where class_name like N'%$class_name%') as CLASS inner join class_by_student on CLASS.class_id = class_by_student.class_id");
+		$query = $this->db->query("select 
+											EXTEND2.extend_id,
+											EXTEND2.class_id,
+									        EXTEND2.class_name,
+									        EXTEND2.level_id,
+									        EXTEND2.class_code,
+									        EXTEND2.precent_debt,
+									        EXTEND2.shift_id,
+									        student.student_id,
+									        student.student_name,
+									        student.student_identitycard
+									from (
+											select 
+												CLASS.class_id,
+												CLASS.class_name,
+												CLASS.level_id,
+												extend_class_student.extend_id,
+												extend_class_student.student_id,
+												extend_class_student.class_code,
+												extend_class_student.shift_id,
+												extend_class_student.precent_debt 
+												from ( select 
+															class_id,
+															class_name,
+															level_id 
+														from class 
+														where class_id = 1) as CLASS 
+												inner join extend_class_student 
+												on CLASS.class_id = extend_class_student.class_id) AS EXTEND2 
+									inner join student 
+									on student.student_id=EXTEND2.student_id");
 		return $query->result_array();
 	}
 
