@@ -39,6 +39,8 @@ class Schedule extends Pageparent_Controller
           'student_name' => $arrayDB['student_name'],
           'class_name' => $arrayDB['class_name'].$arrayDB['level_id'].$arrayDB['class_code'],
           'shift_id' => $arrayDB['shift_id'],
+          'class_open' => $arrayDB['class_open'],
+          'class_finish' => $arrayDB['class_finish'],
           'time_in' => $time_in,
           'time_out' =>$time_out
         );
@@ -68,6 +70,8 @@ class Schedule extends Pageparent_Controller
           'student_name' => $arrayDB['student_name'],
           'class_name' => $arrayDB['class_name'].$arrayDB['level_id'].$arrayDB['class_code'],
           'shift_id' => $arrayDB['shift_id'],
+          'class_open' => $arrayDB['class_open'],
+          'class_finish' => $arrayDB['class_finish'],
           'time_in' => $time_in,
           'time_out' =>$time_out
         );

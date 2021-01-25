@@ -56,6 +56,8 @@
 							<tr>
 							    <th>Lớp</th>
 							    <th>Tên Học Viên</th> 
+							    <th>Ngày Bắt Đầu</th>
+							    <th>Ngày Kết Thúc</th> 
 							    <th>Thời Gian Vào</th>
 							    <th>Thời Gian Ra</th>
 							</tr>
@@ -73,6 +75,8 @@
 							<tr>
 							    <th>Lớp</th>
 							    <th>Tên Học Viên</th> 
+							    <th>Ngày Bắt Đầu</th>
+							    <th>Ngày Kết Thúc</th> 
 							    <th>Thời Gian Vào</th>
 							    <th>Thời Gian Ra</th>
 							</tr>
@@ -139,7 +143,7 @@
 			var i;
 			for(i = 0;i < ketqua.length;i++)
 			{
-				htmlString = '<tr><td id="schedule_class_id"'+ketqua[i].student_id+'>'+ketqua[i].class_name+'</td><td id="schedule_student_id"'+ketqua[i].student_id+'>'+ketqua[i].student_name+'</td><td id="schedule_student_id"'+ketqua[i].student_id+'>'+ketqua[i].time_in+'</td><td id="schedule_student_id"'+ketqua[i].student_id+'>'+ketqua[i].time_out+'</td></tr>';
+				htmlString = '<tr><td id="schedule_class_name_'+ketqua[i].student_id+'">'+ketqua[i].class_name+'</td><td id="schedule_student_name_'+ketqua[i].student_id+'">'+ketqua[i].student_name+'</td><td id="schedule_student_open_'+ketqua[i].student_id+'">'+ketqua[i].class_open+'</td><td id="schedule_student_finish_'+ketqua[i].student_id+'">'+ketqua[i].class_finish+'</td><td id="schedule_student_timein_'+ketqua[i].student_id+'">'+ketqua[i].time_in+'</td><td id="schedule_student_timeout_'+ketqua[i].student_id+'">'+ketqua[i].time_out+'</td></tr>';
 				$('#table-schedule-student').find('tbody').append(htmlString);
 			}
 		});
@@ -165,7 +169,7 @@
 			var i;
 			for(i = 0;i < ketqua.length;i++)
 			{
-				htmlString = '<tr><td id="schedule_class_id"'+ketqua[i].student_id+'>'+ketqua[i].class_name+'</td><td id="schedule_student_id"'+ketqua[i].student_id+'>'+ketqua[i].student_name+'</td><td id="schedule_student_id"'+ketqua[i].student_id+'>'+ketqua[i].time_in+'</td><td id="schedule_student_id"'+ketqua[i].student_id+'>'+ketqua[i].time_out+'</td></tr>';
+				htmlString = '<tr><td id="schedule_class_name_'+ketqua[i].student_id+'">'+ketqua[i].class_name+'</td><td id="schedule_student_name_'+ketqua[i].student_id+'">'+ketqua[i].student_name+'</td><td id="schedule_student_open_'+ketqua[i].student_id+'">'+ketqua[i].class_open+'</td><td id="schedule_student_finish_'+ketqua[i].student_id+'">'+ketqua[i].class_finish+'</td><td id="schedule_student_timein_'+ketqua[i].student_id+'">'+ketqua[i].time_in+'</td><td id="schedule_student_timeout_'+ketqua[i].student_id+'">'+ketqua[i].time_out+'</td></tr>';
 				$('#table-schedule-class').find('tbody').append(htmlString);
 			}
 		});
