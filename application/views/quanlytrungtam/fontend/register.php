@@ -39,22 +39,6 @@
 					</select>
 					<button type="button" class="btn btn-link" data-toggle="modal" data-target="#PopupStudentModal" onclick="detailItemStudent()">Xem Chi Tiết</button>
 				</div>
-				<!-- <div class="form-group">
-					<label>Chọn giáo viên</label>
-					<select class="form-control" id="item_teacher_name">
-					<?php 
-						foreach ($dataTeacher as $key => $value) {
-							$teacherName = $value['teacher_name'];
-							echo '<option id="teacher_name'.$value['teacher_id'].'">'.$teacherName.'</option>';
-						}
-					?>
-					</select>
-					<button type="button" class="btn btn-link" data-toggle="modal" data-target="#PopupTeacherModal" onclick="detailItemTeacher()">Xem Chi Tiết</button>
-				</div> -->
-				<div class="form-group">
-					<label>Phần trăm tiền</label>
-					<input type='number' class="form-control" placeholder="100% là đã trả đủ" id="precent_debt" min="50" max="100" require>
-				</div>
 				<div class="form-group">
 					<label>Chọn ca học</label>
 					<select class="form-control" id="item_shift_name">
@@ -69,7 +53,7 @@
 				</div>
 				<button class ="btn btn-primary btn-md">SAVE</a></button>
 			</form>
-			<div class="alert bg-info hidden" role="alert" id="success"><em class="fa fa-lg fa-warning">&nbsp;</em> Đã đăng ký thành công ! <em class="fa fa-lg fa-close"></em></a></div>
+			<div class="alert bg-info hidden" role="alert" id="success"><em class="fa fa-lg fa-warning">&nbsp;</em> Đã đăng ký online thành công ! Bộ phận ghi danh sẽ liên hệ bạn sớm nhất <em class="fa fa-lg fa-close"></em></a></div>
 			<div class="alert bg-info hidden" role="alert" id="fail-shift"><em class="fa fa-lg fa-warning">&nbsp;</em> Đã trùng lịch vui lòng kiểm tra lại ! <em class="fa fa-lg fa-close"></em></a></div>
 			<div class="alert bg-teal hidden" role="alert" id="fail"><em class="fa fa-lg fa-warning">&nbsp;</em> Lớp đã đăng ký rồi ! <em class="fa fa-lg fa-close"></em></a></div>
 		</div>
@@ -429,8 +413,8 @@
 			// level_id = $('#item_level_name').find('option:selected').val(),
 			// teacher_name = $('#item_teacher_name').find('option:selected').val(),
 			shift_id = $('#item_shift_name').find('option:selected').attr("shiftID"),
-			shift_name = $('#item_shift_name').find('option:selected').val(),
-			precent_debt = $('#precent_debt').val();
+			shift_name = $('#item_shift_name').find('option:selected').val();
+			// precent_debt = $('#precent_debt').val();
 			var data = {
 				student_id:student_id,
 				student_name:student_name,
@@ -441,10 +425,9 @@
 				// level_id:level_id, 
 				// teacher_name:teacher_name, 
 				shift_name:shift_name,
-				shift_id:shift_id,
-				precent_debt: precent_debt, 
+				shift_id:shift_id
+				//precent_debt: precent_debt, 
 			};
-		
 	$.ajax({
 	  type: "POST",
 	  url: '<?php echo $ajaxRegister; ?>', 

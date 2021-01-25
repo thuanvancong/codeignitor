@@ -226,6 +226,8 @@ class quanlytrungtam_model extends CI_Model
 									        EXTEND2.class_name,
 									        EXTEND2.level_id,
 									        EXTEND2.class_code,
+									        EXTEND2.class_open,
+									        EXTEND2.class_finish,
 									        EXTEND2.precent_debt,
 									        EXTEND2.shift_id,
 									        student.student_id,
@@ -236,6 +238,8 @@ class quanlytrungtam_model extends CI_Model
 												CLASS.class_id,
 												CLASS.class_name,
 												CLASS.level_id,
+												CLASS.class_open,
+												CLASS.class_finish,
 												extend_class_student.extend_id,
 												extend_class_student.student_id,
 												extend_class_student.class_code,
@@ -244,6 +248,8 @@ class quanlytrungtam_model extends CI_Model
 												from ( select 
 															class_id,
 															class_name,
+															class_open,
+															class_finish,
 															level_id 
 														from class 
 														where class_id = 1) as CLASS 

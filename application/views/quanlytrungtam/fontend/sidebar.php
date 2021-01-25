@@ -28,7 +28,7 @@
 					<li><a class="" href="http://localhost:8888/codeigniter/webthuan/index.php/fontend/Register/index">
 						<span class="fa fa-arrow-right">&nbsp;</span> Đăng ký môn học
 					</a></li>
-					<li><a class="" href="http://localhost:8888/codeigniter/webthuan/index.php/Schedule/index">
+					<li><a class="" href="http://localhost:8888/codeigniter/webthuan/index.php/fontend/Schedule/index">
 						<span class="fa fa-arrow-right">&nbsp;</span> Thời khóa biểu
 					</a></li>
 				</ul>

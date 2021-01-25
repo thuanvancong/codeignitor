@@ -18,23 +18,23 @@ class Register extends Fontend_Controller
                $user_name = $value['user_name'];
                $array = explode('_', $user_name); 
             }
-            $student_indentity = $array[1];
+            $student_identitycard = $array[1];
         }
         
         $this->load->model("quanlytrungtam_model");
-    	$data['dataStudent'] = $this->quanlytrungtam_model->GetDBTable('student');
+    	$data['dataStudent'] = $this->quanlytrungtam_model->GetDBByID($student_identitycard,'student','student_identitycard');
     	$data['dataClass'] = $this->quanlytrungtam_model->GetDBTable('class');
     	$data['dataShift'] = $this->quanlytrungtam_model->GetDBTable('shift');
         $data['dataCourse'] = $this->quanlytrungtam_model->GetDBTable('course');
         $data['dataLevel'] = $this->quanlytrungtam_model->GetDBTable('tb_level');
     	$data['pageName'] = 'register';
     	$this->load->helper('url');
-        $data['ajaxDetailCourse'] = site_url('Register/ajaxDetailCourse');
-    	$data['ajaxDetailClass'] = site_url('Register/ajaxDetailClass');
-    	$data['ajaxDetailStudent'] = site_url('Register/ajaxDetailStudent');
-    	$data['ajaxDetailTeacher'] = site_url('Register/ajaxDetailTeacher');
-    	$data['ajaxDetailShift'] = site_url('Register/ajaxDetailShift');
-    	$data['ajaxRegister'] = site_url('Register/ajaxRegister');
+        $data['ajaxDetailCourse'] = site_url('fontend/Register/ajaxDetailCourse');
+    	$data['ajaxDetailClass'] = site_url('fontend/Register/ajaxDetailClass');
+    	$data['ajaxDetailStudent'] = site_url('fontend/Register/ajaxDetailStudent');
+    	$data['ajaxDetailTeacher'] = site_url('fontend/Register/ajaxDetailTeacher');
+    	$data['ajaxDetailShift'] = site_url('fontend/Register/ajaxDetailShift');
+    	$data['ajaxRegister'] = site_url('fontend/Register/ajaxRegister');
     	$this->load->view("quanlytrungtam/fontend/layout",$data);
     }
 
@@ -102,7 +102,6 @@ class Register extends Fontend_Controller
         $class_id = $_POST['class_id'];   
         $class_name = $_POST['class_name']; 
         $shift_id =  $_POST['shift_id'];
-        $precent_debt = $_POST['precent_debt'];
         //Kiem tra đã đăng ký lớp đó chưa
         $check_class_student = $this->quanlytrungtam_model->Check_Class_Student_By_ID($student_id,$class_id);
         if(empty($check_class_student))
@@ -118,7 +117,6 @@ class Register extends Fontend_Controller
                     'student_id' => $student_id,
                     'class_code' => 'A',
                     'shift_id' => $shift_id,
-                    'precent_debt' => $precent_debt
                 );
                 $id_extend=$this->quanlytrungtam_model->InsertDB($dataInsertDB_Extend,'extend_class_student');
 
@@ -140,7 +138,6 @@ class Register extends Fontend_Controller
                         'student_id' => $student_id,
                         'class_code' => $class_code,
                         'shift_id' => $shift_id,
-                        'precent_debt' => $precent_debt
                     );
                     $id_extend=$this->quanlytrungtam_model->InsertDB($dataInsertDB_Extend,'extend_class_student');
                 }
@@ -160,7 +157,6 @@ class Register extends Fontend_Controller
                         'student_id' => $student_id,
                         'class_code' => $class_code,
                         'shift_id' => $shift_id,
-                        'precent_debt' => $precent_debt
                     );
                     $id_extend=$this->quanlytrungtam_model->InsertDB($dataInsertDB_Extend,'extend_class_student');
                 }
