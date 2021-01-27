@@ -1222,3 +1222,8 @@ table#table-config
   margin-left: 15px;
   width: 54%;
 }
+
+#fa-printer a
+{
+  color: #337ab7;
+}

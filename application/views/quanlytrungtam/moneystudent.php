@@ -40,14 +40,20 @@
 										<td id="student-identitycard'.$value['student_identitycard'].'" class="student-identitycard">'.$value['student_identitycard'].'</td>
 										<td id="class-name'.$value['class_id'].'" class="class-name">'.$value['class_name'].'</td>
 										<td id="precent_pay'.$value['student_identitycard'].'" class="precent_pay" price="'.$money.'">'.number_format($money).'</td>
-										<td id="precent_debt'.$value['student_identitycard'].'" class="precent_debt" price-debt="'.$money_debt.'">'.number_format($money_debt).'</td>';
+										<td id="precent_debt'.$value['student_identitycard'].'" class="precent_debt" price-debt="'.$money_debt.'">'.number_format($money_debt).'</td>
+										<td id="fa-printer"><a href="#"><i class="fa fa-print fa-2x" aria-hidden="true"></i></a></td>';
 
 								}
 								echo'</tr>';
 							?> 
 						</tbody>
 					</table>
-					<button type="button" class="btn btn-md btn-primary" data-toggle="modal" data-target="#PopupPaymentDebt" onclick="">THANH TOÁN TIỀN NỢ</button>
+					<div class="group-btn">
+						<form method="post" action="<?php echo $exportExcel; ?>">
+							<button type="button" class="btn btn-md btn-primary" data-toggle="modal" data-target="#PopupPaymentDebt" onclick="">THANH TOÁN TIỀN NỢ</button>
+					     	<input type="submit" name="export" class="btn btn-success btn-primary" value="Export" />
+					    </form>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -101,8 +107,11 @@
 			</form>
 	      </div>
 	      <div class="modal-footer">
-	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-	        <button type="button" class="btn btn-primary" onclick="ajaxUpdatePaymentDebt()" >Save changes</button>
+	      	<form method="post" action="<?php echo $exportExcel; ?>">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+	        	<button type="button" class="btn btn-primary" onclick="ajaxUpdatePaymentDebt()" >Save changes</button>
+				<input type="submit" name="export" class="btn btn-success btn-primary" value="In Phiếu Tính Tiền" />
+			</form>
 	      </div>
 	    </div>
 	  </div>
@@ -163,7 +172,6 @@ function detailItemPaymenyt()
 		
 	});
 }
-
 function ajaxUpdatePaymentDebt()
 {
 	var precentPayment = $('#precentPayment').attr("money-debt"),

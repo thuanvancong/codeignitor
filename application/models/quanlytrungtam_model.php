@@ -252,7 +252,7 @@ class quanlytrungtam_model extends CI_Model
 															class_finish,
 															level_id 
 														from class 
-														where class_id = 1) as CLASS 
+														where class_id = $class_id) as CLASS 
 												inner join extend_class_student 
 												on CLASS.class_id = extend_class_student.class_id) AS EXTEND2 
 									inner join student 
