@@ -26,8 +26,9 @@ class Money extends Pageparent_Controller
     	$data['ajaxPayment'] = site_url("Money/ajaxPayment");
     	$data['pageMoneyStudent'] = site_url("Money/moneyStudent");
         $data['dbClass'] = $this->quanlytrungtam_model->GetDBTable('class');
-        //$data['exportExcel'] = site_url("Money/action");
-        $data['exportExcel'] = site_url("Money/TemplateReportReceipt");
+        $data['exportListMoneyStudent'] = site_url("Money/TemplateReportListMoneyStudent");
+        $data['exportExcel'] = site_url("Money/ajaxReportReceipt");
+        $data['export'] = site_url("Money/TemplateReportReceipt");
     	$this->load->model("quanlytrungtam_model");
     	$data['dbExtend'] = $this->quanlytrungtam_model->getDBJoin_STUDENT_CLASS_EXTENTD();
     	$this->load->view("quanlytrungtam/layout",$data);
@@ -66,8 +67,7 @@ class Money extends Pageparent_Controller
     }
 
 
-    // TEST EXCEL
-    function action()
+    function TemplateReportListMoneyStudent()
     {
 
         $this->load->library("Excel");
@@ -92,10 +92,10 @@ class Money extends Pageparent_Controller
         );
         $objPHPExcel->getActiveSheet()->getStyle('J10:P13')->applyFromArray($stil);
 
-        // Merge Cells
-        $objPHPExcel->getActiveSheet()->mergeCells('J10:P13');
-        $objPHPExcel->getActiveSheet()->setCellValue('J10', "MERGED CELL");
-        $objPHPExcel->getActiveSheet()->getStyle('J10:P13')->applyFromArray($stil);
+        // // Merge Cells
+        // $objPHPExcel->getActiveSheet()->mergeCells('J10:P13');
+        // $objPHPExcel->getActiveSheet()->setCellValue('J10', "MERGED CELL");
+        // $objPHPExcel->getActiveSheet()->getStyle('J10:P13')->applyFromArray($stil);
         // //-------Set document properties
         // $objPHPExcel->getProperties()->setCreator("Furkan Kahveci")
         //                      ->setLastModifiedBy("Furkan Kahveci")
@@ -139,22 +139,44 @@ class Money extends Pageparent_Controller
             $excel_row++;
         }
         // ------Save Excel xls File
-        $filename="export-listmoneystudent.xls";
+        $filename="Report-listmoneystudent.xls";
         $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
         ob_end_clean();
         header('Content-type: application/vnd.ms-excel');
         header('Content-Disposition: attachment; filename='.$filename);
         $objWriter->save('php://output');
+    }
+
+    function ajaxReportReceipt()
+    {
+        $student_identitycard = $_POST['student_identitycard'];
+        $student_id = $_POST['class_student_id'];
+        $class_id = (int)$_POST['schedule_class'];
+        $level_id = (int)$_POST['level_id'];
+        $this->load->model("quanlytrungtam_model");
+        $dbExtend = $this->quanlytrungtam_model->getDB_STUDENT_CLASS_EXTENTD_BY_INDENTITYCARD($student_identitycard,$class_id,$level_id);
+        foreach ($dbExtend as $key => $value) {
+            $student_name = $value['student_name'];
+            $money_paid = $value['course_price']*(100-$value['precent_debt'])/100;
+        }
+        $this->load->helper("url");
+        $url = site_url("Money/TemplateReportReceipt").'?student_name='.$student_name.'&student_identitycard='.$student_identitycard.'&money_paid='.$money_paid;
         $ketquaAjax = array(
-            'ketqua' => 1
+            'ketqua' => 1,
+            'url' => $url
         );
         echo json_encode($ketquaAjax);
     }
 
     function TemplateReportReceipt()
     {
+        $student_name = $_GET['student_name'];
+        $student_identitycard = $_GET['student_identitycard'];
+        $money_paid = $_GET['money_paid'];
         $this->load->library("Excel");
+        
         $objPHPExcel = new PHPExcel();
+
         // Set Fontsize
         $style=array(
                 'alignment' => array(
@@ -170,6 +192,8 @@ class Money extends Pageparent_Controller
         $objPHPExcel->getActiveSheet()->getStyle('A2:B2')->applyFromArray($style2);
         $objPHPExcel->getActiveSheet()->getStyle('A11:A12')->applyFromArray($style2);
         $objPHPExcel->getActiveSheet()->getStyle('A13:A14')->applyFromArray($style2);
+        $objPHPExcel->getActiveSheet()->getStyle('B11:B12')->applyFromArray($style2);
+        $objPHPExcel->getActiveSheet()->getStyle('B13:B14')->applyFromArray($style2);
         $objPHPExcel->getActiveSheet()->getStyle('E1:I1')->applyFromArray($style);
         $objPHPExcel->getActiveSheet()->getStyle('E2:I2')->applyFromArray($style);
         $objPHPExcel->getActiveSheet()->getStyle('E3:I3')->applyFromArray($style);
@@ -204,13 +228,19 @@ class Money extends Pageparent_Controller
         $objPHPExcel->getActiveSheet()->setCellValue('C8', "Ngày... Tháng... Năm...");
 
         // Set template CENTER 
-        $objPHPExcel->setActiveSheetIndex(0);
         $objPHPExcel->getActiveSheet()->setCellValue('A11', "Họ Và Tên");
-        $objPHPExcel->getActiveSheet()->setCellValue('A12', "Địa Chỉ");
+        $objPHPExcel->getActiveSheet()->setCellValue('A12', "Số CMND");
         $objPHPExcel->getActiveSheet()->setCellValue('A13', "Số Tiền Đóng");
         $objPHPExcel->getActiveSheet()->setCellValue('A14', "Bằng Chữ");
-            
+
+        // SET VALUE 
+        $objPHPExcel->getActiveSheet()->setCellValue('B11', $student_name);
+        $objPHPExcel->getActiveSheet()->setCellValue('B12', $student_identitycard);
+        $objPHPExcel->getActiveSheet()->setCellValue('B13', number_format($money_paid).'VND');
+        $objPHPExcel->getActiveSheet()->setCellValue('B14', "Bằng Chữ");
+
         // ------Save Excel xls File
+
         $filename="Report-Receipt.xls";
         $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
         ob_end_clean();

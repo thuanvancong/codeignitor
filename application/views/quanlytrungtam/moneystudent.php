@@ -49,9 +49,9 @@
 						</tbody>
 					</table>
 					<div class="group-btn">
-						<form method="post" action="<?php echo $exportExcel; ?>">
+						<form method="post" action="<?php echo $exportListMoneyStudent; ?>">
 							<button type="button" class="btn btn-md btn-primary" data-toggle="modal" data-target="#PopupPaymentDebt" onclick="">THANH TOÁN TIỀN NỢ</button>
-					     	<input type="submit" name="export" class="btn btn-success btn-primary" value="Export" />
+					     	<input type="submit" name="export" class="btn btn-success btn-primary" value="Export Danh Sách" />
 					    </form>
 					</div>
 				</div>
@@ -107,7 +107,7 @@
 			</form>
 	      </div>
 	      <div class="modal-footer">
-	      	<form method="post" action="<?php echo $exportExcel; ?>">
+	      	<form id="group-btn-popup" method="post" action="exportExcel()">
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 	        	<button type="button" class="btn btn-primary" onclick="ajaxUpdatePaymentDebt()" >Save changes</button>
 				<input type="submit" name="export" class="btn btn-success btn-primary" value="In Phiếu Tính Tiền" />
@@ -158,7 +158,6 @@ function detailItemPaymenyt()
 				$('#studentIdentitycard').attr("ClassStudentID",ketqua[i]['student_id']);
 				$('#precentDebt').attr("money",ketqua[i]['precent_debt']);
 				$('#precentPayment').attr("money-debt",precent_pay);
-				console.log(ketqua[i]['student_id']);
 				if(ketqua[i].precent_debt == 100)
 				{
 					alert("Đã Thanh Toán Đủ");
@@ -200,4 +199,44 @@ function ajaxUpdatePaymentDebt()
 		}
 	});
 }
+
+var frm = $('#group-btn-popup');
+frm.submit(function (e) {
+e.preventDefault();
+	var student_identitycard = $('#studentIdentitycard').val(),
+		class_student_id = $('#studentIdentitycard').attr("ClassStudentID"),
+		schedule_class = $('#schedule-class').find('option:selected').val(),
+		level_id = $('#schedule-class').find('option:selected').attr("class_level"),
+		class_code = $('#class_code').find('option:selected').val(),
+		precentPayment = $('#precentPayment').val(),
+		precentDebt = $('#precentDebt').val();
+		data = {
+			student_identitycard:student_identitycard,
+			class_student_id:class_student_id,
+			schedule_class:schedule_class,
+			level_id:level_id,
+			class_code:class_code,
+			precentPayment:precentPayment,
+			precentDebt:precentDebt
+		};
+$.ajax({
+  type: "POST",
+  url: '<?php echo $exportExcel; ?>', 
+  data: data,
+  dataType: 'json',
+	}).done(function(data) {
+		var kq = data.ketqua,
+			urlDowload = data.url;
+	  	if(kq > 0)
+	  	{
+	  		window.location.href=data.url;
+	  	}
+	  	else
+	  	{
+	  		alert("Sửa không thành công ");
+	  	}
+	});
+});
+
+
 </script>
