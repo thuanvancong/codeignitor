@@ -11,6 +11,7 @@ class Login extends Pageparent_Controller
 		$this->load->helper('url');
 		$data['ajaxCheckLogin'] =site_url('Login/ajaxCheckLogin');
 		$data['index'] =site_url('quanlytrungtam/index');
+		$data['fontend'] =site_url('fontend/Fontend/index');
 		$this->load->view("quanlytrungtam/layout_login",$data);
 	}
 	
@@ -28,14 +29,27 @@ class Login extends Pageparent_Controller
 		}
 		else
 		{
-			$ketquaAjax = array(
-				'ketqua' => 1
-			);
+			
 			foreach ($dataDB as $key => $value) {
 				$array= array(
 					'user_id' => $value['user_id'],
 					'user_name' => $value['user_name']
 				);
+				$user_name = $value['user_name'];
+				$mang = explode('_', $user_name);
+				$key = $mang[0];
+				if($key == 'SV')
+				{
+					$ketquaAjax = array(
+						'ketqua' => 1
+					);
+				}
+				else
+				{
+					$ketquaAjax = array(
+						'ketqua' => 2
+					);
+				}
 			}
 			$_SESSION['user'] = $array;	
 		}

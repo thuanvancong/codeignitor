@@ -48,9 +48,17 @@ frm.submit(function (e) {
       dataType: 'json',
  	}).done(function(data) {
  		var ketqua = data.ketqua;
- 		if(ketqua == 1)
+ 		if(ketqua > 0)
  		{
- 			window.location.href='<?php echo $index; ?>';
+ 			if(ketqua == 2)
+ 			{
+ 				window.location.href='<?php echo $index; ?>';
+ 			}
+ 			else
+ 			{
+ 				window.location.href='<?php echo $fontend; ?>';
+ 			}
+ 			
  		}
  		else
  		{
