@@ -21,6 +21,7 @@ class Money extends Pageparent_Controller
     function moneyStudent()
     {
     	$this->load->helper('url');
+        $this->load->model("quanlytrungtam_model");
     	$data['pageName'] = 'moneystudent';
     	$data['ajaxDetailPayment'] = site_url("Money/ajaxDetailPayment");
     	$data['ajaxPayment'] = site_url("Money/ajaxPayment");
@@ -69,7 +70,7 @@ class Money extends Pageparent_Controller
 
     function TemplateReportListMoneyStudent()
     {
-
+        $this->load->model("quanlytrungtam_model");
         $this->load->library("Excel");
         $objPHPExcel = new PHPExcel();
         // $tmpfname = "example.xls";
